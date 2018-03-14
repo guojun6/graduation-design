@@ -1,0 +1,52 @@
+{
+  "name": "graduation-design",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./build/dev-server.js",
+    "build": "node ./build/build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guojun6/graduation-design.git"
+  },
+  "author": "guojun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guojun6/graduation-design/issues"
+  },
+  "homepage": "https://github.com/guojun6/graduation-design#readme",
+  "dependencies": {
+    "node-fetch": "^2.1.1",
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^8.1.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.10",
+    "express": "^4.16.3",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.0.6",
+    "node-sass": "^4.7.2",
+    "postcss-loader": "^2.1.1",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "url-loader": "^1.0.1",
+    "vue-loader": "^14.2.1",
+    "vue-style-loader": "^4.0.2",
+    "vue-template-compiler": "^2.5.16",
+    "webpack": "^3.11.0",
+    "webpack-dev-middleware": "^2.0.4",
+    "webpack-hot-middleware": "^2.21.2",
+    "webpack-merge": "^4.1.2"
+  }
+}
