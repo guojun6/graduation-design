@@ -17,10 +17,10 @@ var ExtractVueStyle = new ExtractTextPlugin('css/[name]-[chunkhash].css'),
 module.exports = {
     entry: {
         'public': ['vue', 'vuex', 'vue-router'],
-        'app': path.resolve(__dirname, '../src/index.js'), 
+        'app': path.resolve(__dirname, '../src/client/index.js'), 
     },
     output: {
-        path: path.resolve(__dirname, '../dist'),
+        path: path.resolve(__dirname, '../dist/client'),
         publicPath: './',
         chunkFilename: 'js/[name]/[chunkhash].js'
     },
@@ -28,12 +28,17 @@ module.exports = {
         // 提取css内容
         ExtractVueStyle,
         ExtractStyle,
-        
+        new webpack.DefinePlugin({
+            'contentURL': JSON.stringify('/sp/pages/'),
+            'localURLBase': JSON.stringify('http://localhost:4000'),
+            'devURLBase': JSON.stringify(''),
+            'prodURLBase': JSON.stringify('')
+        })
     ],
     module: {
         loaders: [{
             test: /\.vue$/,
-            include: path.resolve(__dirname, '../src'),
+            include: path.resolve(__dirname, '../src/client'),
             loader: 'vue-loader',
             options: {
                 loaders: {
@@ -48,7 +53,7 @@ module.exports = {
             }
         }, {
             test: /\.js$/,
-            include: path.resolve(__dirname, '../src'),
+            include: path.resolve(__dirname, '../src/client'),
             loader: 'babel-loader'
         }, {
             test: /\.(png|jpg|gif|ico|svg)(\?.*)?$/,
@@ -100,7 +105,7 @@ module.exports = {
         extensions: ['.js', '.jsx', '.vue', '.json'],
         alias: {
             'vue$': 'vue/dist/vue.esm.js',
-            '@': path.resolve(__dirname, '../src')
+            '@': path.resolve(__dirname, '../src/client')
         }
     }
 };

@@ -34,7 +34,7 @@ var exp = merge(baseConfig, {
         
         // 转移html模板
         new HtmlPlugin({
-            template: path.resolve(__dirname, '../src/index.html'),
+            template: path.resolve(__dirname, '../src/client/index.html'),
             fimename: 'index.html',
             inject: 'body'
         })

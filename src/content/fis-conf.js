@@ -15,7 +15,7 @@ fis.match('*', {
 });
 
 fis.match('*', {
-    release: '/content/$0',
+    release: '/sp/$0',
 });
 
 // 使用cdn时开发调试部署-前端资源发布目录设置
