@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>T</title>
+        <script src="../../libs/require/2.1.18/require.js"></script>
+    </head>
+    <body>
+        <section class="top-header">
+            <div class="title">
+                <div class="logo">
+                    <img src="../../assets/images/logo.jpg" alt="第一虚拟课堂">
+                </div>
+                <div class="site-name">第一虚拟课堂</div>
+            </div>
+            <ul class="nav">
+                <li>
+                    <a href="/#/home">首页</a>
+                </li>
+                <li>
+                    <a to="/#/home">测试</a>
+                </li>
+            </ul>
+        </section>
+        <div class="container-o">
+            <div class="main">
+                <header>
+                    <div class="tab">
+                        <div>登录</div>
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="tab transparent">
+                        <div>注册</div>
+                        <div class="triangle"></div>
+                    </div>
+                </header>
+                <div class="container">
+                    <div class="error-tips hide"></div>
+                    <div class="form-ctn log-form-ctn">
+                        <div class="input-control">
+                            <label class="input-name">邮箱：</label>
+                            <input id="log-email" type="text"/>
+                        </div>
+                        <div class="input-control">
+                            <label class="input-name">密码：</label>
+                            <input id="log-password" type="password"/>
+                        </div>
+                        <div class="input-control">
+                            <button id="btn-login">登录</button>
+                        </div>
+                    </div>
+                    <div class="form-ctn reg-form-ctn hide">
+                        <div class="reg-tips">
+                            <span>注：带</span>
+                            <span class="red">*</span>
+                            <span>号的是必填项</span>
+                        </div>
+                        <div class="input-control">
+                            <label class="input-name">邮箱：</label>
+                            <input id="reg-email" type="text"/>
+                            <span class="red">*<span>
+                        </div>
+                        <div class="input-control">
+                            <label class="input-name">密码：</label>
+                            <input id="reg-password" type="password"/>
+                            <span class="red">*<span>
+                        </div>
+                        <div class="input-control">
+                            <label class="input-name">用户名：</label>
+                            <input id="reg-username" type="text"/>
+                            <span class="red">*<span>
+                        </div>
+                        <div class="input-control">
+                            <label class="input-name">手机：</label>
+                            <input id="reg-phone" type="text"/>
+                        </div>
+                        <div class="input-control">
+                            <button id="btn-register">注册</button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="bottom-footer">
+            <p>刘东峰团队研制</p>
+            <p>
+                <span>关于我们</span>
+                <span>|</span>
+                <span>联系我们</span>
+            </p>
+        </div>
+        <!--SCRIPT_PLACEHOLDER-->
+        <script>
+            var apiBase = 'http://192.168.199.195:8080';
+            require(['./index'], function(script) {
+                script.init();
+            });
+        </script>
+    </body>
+</html>

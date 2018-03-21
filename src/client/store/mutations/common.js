@@ -1,12 +1,15 @@
 import {typeOf} from '../../../utils/common';
 
-import {SET_TOAST} from '../mutation-types';
+import {
+    SET_TOAST,
+    SET_USER_INFO,
+    SET_IS_LOGIN
+} from '../mutation-types';
 
 
 
 export default {
     [SET_TOAST](state, payload) {
-        console.log(payload, typeOf(payload))
         switch(typeOf(payload)) {
             case 'string':
                 state.toast.txt = payload;
@@ -18,5 +21,11 @@ export default {
                 state.toast = payload;
                 break;
         }
+    },
+    [SET_USER_INFO](state, data) {
+        state.userInfo = data;
+    },
+    [SET_IS_LOGIN](state, isLogin) {
+        state.isLogin = isLogin;
     }
 };

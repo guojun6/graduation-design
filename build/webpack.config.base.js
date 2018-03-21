@@ -31,7 +31,7 @@ module.exports = {
         new webpack.DefinePlugin({
             'contentURL': JSON.stringify('/sp/pages/'),
             'localURLBase': JSON.stringify('http://localhost:4000'),
-            'devURLBase': JSON.stringify(''),
+            'devURLBase': JSON.stringify('http://192.168.199.195:8080'),
             'prodURLBase': JSON.stringify('')
         })
     ],

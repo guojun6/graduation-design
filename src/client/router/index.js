@@ -8,7 +8,8 @@ const Manager = () => import(/* webpackChunkName: "home" */ '../container/manage
 
 export default new VueRouter({
     routes: [{
-        path: '/home',
+        path: '/',
+        alias: '/home',
         component: Home
     }, {
         path: '/manager',

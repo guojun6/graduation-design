@@ -15,21 +15,47 @@
             </li>
         </ul>
         <div class="account">
-            <el-button class="btn-account">
-                <a href="#">登录/注册</a>
+            <el-button
+                class="btn-account"
+                v-if="!isLogin">
+                <a href="/sp/pages/account/">登录/注册</a>
             </el-button>
+            <div
+                class="user-info"
+                v-else>
+                <span>{{userInfo.username}}，欢迎您</span>
+                <img
+                    :src="userInfo.profilehead"
+                    alt="个人设置">
+            </div>
         </div>
     </section>
 </template>
 
 <script>
-import {
-    Button
-} from 'element-ui';
+import {mapState, mapActions} from 'vuex';
+import {Button} from 'element-ui';
+
 export default {
     name: 'top-header',
+    computed: {
+        ...mapState({
+            userInfo: 'userInfo',
+            isLogin: 'isLogin'
+        })
+    },
     components: {
         [Button.name]:Button
+    },
+    methods: {
+        ...mapActions([
+            'setUserInfo',
+            'setIsLogin'
+        ])
+    },
+    created() {
+        console.log(this.userInfo, this.isLogin)
+        this.setUserInfo();
     }
 };
 </script>
