@@ -65,7 +65,8 @@ var index = {
             },
             success: function(res) {
                 if (res.status === 200) {
-                    location.href = '/#/home';
+                    // location.href = '/#/home';
+                    $.ajax(apiBase + '/loginController/logout')
                 }
             },
             error: function(err) {

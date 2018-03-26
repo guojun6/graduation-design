@@ -11,12 +11,14 @@
 
 <script>
 export default {
-
+    name: 'bottom-footer'
 };
 </script>
 
 <style lang="scss" scoped>
 .bottom-footer {
+    padding: 6px;
+    font-size: 12px;
     color: #999;
     text-align: center;
 }

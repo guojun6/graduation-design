@@ -22,6 +22,7 @@
     "element-ui": "^2.2.2",
     "node-fetch": "^2.1.1",
     "vue": "^2.5.16",
+    "vue-concise-slider": "^2.4.8",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "whatwg-fetch": "^2.0.3"

@@ -53,13 +53,14 @@ export default {
     },
     methods: {
         getPowerList() {
-            fetch(localURLBase + '/api/managePower').then(function(RES) {
+            // fetch(localURLBase + '/api/managePower')
+            fetch(devURLBase + '/functionController/findMenu').then(function(RES) {
                 return RES.json();
             }).then((res) => {
-                if (res.info.code !== 0) {
+                if (res.status !== 200) {
                     this.setToast({
                         showTime: Date.now(),
-                        txt: '获取目录失败，code: ' + res.info.code
+                        txt: res.msg
                     });
                 }
                 this.powerList = res.data;

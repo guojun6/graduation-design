@@ -69,7 +69,9 @@ fis.match('*.scss', {
 fis.match('*.{js,css,png,scss}', {
     useHash: true,
 });
-
+fis.match('refresh.png', {
+    useHash: false,
+});
 // 开启js压缩
 fis.match('*.js', {
     // fis-optimizer-uglify-js 插件进行压缩，已内置
@@ -177,6 +179,7 @@ fis.hook('module', {
     paths: {
         // 声明公用组件
         jquery: '/libs/jquery-1.11.0/jquery.js',
+        fetch: '/libs/fetch.js'
 
     },
 });
@@ -188,6 +191,14 @@ fis.match('*.js', {
 
 // require.js本身不需要模块化，否则报错
 fis.match('/libs/require/2.1.18/require.js', {
+    isMod: false,
+    useHash: false,
+});
+fis.match('/libs/kindeditor/kindeditor-all.js', {
+    isMod: false,
+    useHash: false,
+});
+fis.match('/libs/kindeditor/lang/zh-CN.js', {
     isMod: false,
     useHash: false,
 });

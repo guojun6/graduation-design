@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>T</title>
+        <script src="../../libs/require/2.1.18/require.js"></script>
+    </head>
+    <body>
+        <article class="manager">
+            <header>
+                <div>第一虚拟课堂管理后台</div>
+                
+            </header>
+            <aside class="catalog">
+                <ul id="catalog-list">
+                    <li
+                        class="fist-level"
+                        v-for="(item, index) in powerList"
+                        :key="index">
+                        <div>{{item.name}}</div>
+                        <ul v-if="item.child">
+                            <li 
+                                class="second-level"
+                                v-for="(childItem, index) in item.child"
+                                :key="index"
+                                @click="setManagePage(childItem.url)">
+                                {{childItem.name}}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+            <main>
+                <div v-if="!iframeURL">欢迎来到第一虚拟课堂管理后台</div>
+                <iframe :src="iframeURL" frameborder="0"></iframe>
+            </main>
+        </article>
+        <div class="toast-ctn">
+            <p class="toast-txt"></p>
+        </div>
+        <!--SCRIPT_PLACEHOLDER-->
+        <script>
+            require(['./index'], function(script) {
+                script.init();
+            });
+        </script>
+    </body>
+</html>

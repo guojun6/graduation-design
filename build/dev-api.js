@@ -1,4 +1,5 @@
 var Router = require('express').Router();
+var fetch = require('node-fetch');
 
 Router.get('/managePower', function(req, res, next) {
     res.send({
@@ -22,5 +23,6 @@ Router.get('/managePower', function(req, res, next) {
         ]
     });
 });
+
 
 module.exports = exports = Router;
