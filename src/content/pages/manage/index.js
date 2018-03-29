@@ -1,5 +1,5 @@
 var $ = require('jquery');
-require('fetch');
+
 var URLBase = {
     'contentURL': '/sp/pages/',
     'localURLBase': 'http://localhost:4000',
@@ -19,33 +19,32 @@ var index = {
         this.getPowerList();
     },
     getPowerList: function() {
-        var url = URLBase.devURLBase + '/functionController/findMenu';
-        fetch(url).then(function(RES) {
-            return RES.json();
-        }).then(function(res) {
-            console.log(res);
-        }).catch(function(err) {
-            console.log(err);
+        
+        $.ajax({
+            url: URLBase.devURLBase + '/functionController/findMenu',
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function(res) {
+                if (res.status !== 200) {
+                    index.setToast(res.msg);
+                    return;
+                }
+                data.powerList = index.arrangePowerList(res.data);
+            }
         });
-        // $.ajax({
-        //     url: URLBase.devURLBase + '/functionController/findMenu',
-        //     crossDomain: true,
-        //     success: function(res) {
-        //         if (res.status !== 200) {
-        //             index.setToast(res.msg);
-        //             return;
-        //         }
-        //         powerList = res.data;
-        //     }
-        // });
+    },
+    arrangePowerList: function(rawList) {
+        return rawList;
     },
     setToast: function(txt) {
-        $('.toast-txt').text(txt).addClass('show');
+        $('.toast-txt').text(txt);
+        $('.toast-ctn').addClass('show');
         if (data.timer) {
             clearTimeout(data.timer);
         }
         data.timer = setTimeout(function() {
-            $('.toast-txt').removeClass('show');
+            $('.toast-ctn').removeClass('show');
         }, 2000);
     }
 };

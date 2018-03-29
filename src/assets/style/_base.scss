@@ -33,7 +33,7 @@ h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight:normal;}
 body { text-align: left;color: #000;overflow-x: hidden;}
 html,body{ font:10px/1.5 Microsoft YaHei,\5b8b\4f53, Arial, Verdana; width: 100%;}
 a{text-decoration: none;white-space:nowrap; color: #000;}
-input,input[type="button"], input[type="submit"], input[type="reset"],input[type="number"] {-webkit-appearance: none; }
+
 input::-webkit-inner-spin-button { -webkit-appearance: none;}
 input::-webkit-outer-spin-button { -webkit-appearance: none;}
 

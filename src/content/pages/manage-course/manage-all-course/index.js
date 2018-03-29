@@ -3,7 +3,12 @@ var $ = require('jquery');
 /**
  * @require './index.scss'
  */
-
+var baseURL = {
+    'contentURL': '/sp/pages/',
+    'localURLBase': 'http://localhost:4000',
+    'devURLBase': 'http://192.168.199.195:8080',
+    'prodURLBase': ''
+};
 
 var data = {
     nowPage: 1,
@@ -12,7 +17,6 @@ var data = {
 
 var index = {
     init: function() {
-        console.log($)
         this.getTestList();
         this.listener();
     },
@@ -63,6 +67,9 @@ var index = {
         });
     },
     getTestList: function() {
+        $.ajax(baseURL.devURLBase + '/itemController/listByTeacher', {
+
+        });
         data.allPage = 4;
         $('#page-count').text(data.allPage);
     },

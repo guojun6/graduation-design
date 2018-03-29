@@ -63,10 +63,18 @@ var index = {
                 email: email,
                 password: password
             },
+            xhrFields: {
+                withCredentials: true
+            },
             success: function(res) {
+                console.log(res)
                 if (res.status === 200) {
                     // location.href = '/#/home';
-                    $.ajax(apiBase + '/loginController/logout')
+                    // $.ajax(apiBase + '/loginController/logout', {
+                    //     xhrFields: {
+                    //         withCredentials: true
+                    //     },
+                    // })
                 }
             },
             error: function(err) {

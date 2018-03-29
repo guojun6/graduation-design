@@ -179,7 +179,8 @@ fis.hook('module', {
     paths: {
         // 声明公用组件
         jquery: '/libs/jquery-1.11.0/jquery.js',
-        fetch: '/libs/fetch.js'
+        fetch: '/libs/fetch.js',
+        utils: '/libs/utils.js'
 
     },
 });
