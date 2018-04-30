@@ -7,7 +7,7 @@ var baseConfig = require('./webpack.config.base');
 module.exports = merge(baseConfig, {
     output: {
         filename: 'js/[name]-[chunkhash].js',
-        publicPath: './client/'
+        publicPath: './'
     },
     plugins: [
         new webpack.DefinePlugin({

@@ -42,7 +42,7 @@ var index = {
                 status: Number($('#test-status').val()),
                 cid: Number($('#class-type2').val()),
                 visitorAllow: Number($('#allow-visitor').val()),
-                // desc: editor.html(),
+                desc: editor.html(),
                 // teacherName: $('#test-teacher').val(),
                 courseUrl: $('#test-webgl').val(),
                 imgUrl: data.filePath,

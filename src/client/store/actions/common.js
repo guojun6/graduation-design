@@ -22,10 +22,10 @@ export default {
         }).then((RES) => {
             return RES.json();
         }).then((res) => {
-            if (res[0].status === 200) {
-                context.commit(SET_USER_INFO, res[0].data);
+            if (res.status === 200) {
+                context.commit(SET_USER_INFO, res.data);
                 context.commit(SET_IS_LOGIN, true);
-            } else if (res[0].status === 300) {
+            } else if (res.status === 300) {
                 context.commit(SET_IS_LOGIN, false);
             }
         }).catch((err) => {

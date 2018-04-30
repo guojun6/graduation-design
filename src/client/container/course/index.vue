@@ -7,7 +7,13 @@
             <div
                 class="title"
                 v-if="course">{{course.name}}</div>
-            <el-button>写报告</el-button>
+            <el-button >
+                <a
+                    :href="'/sp/pages/student-report?studentId='+ this.userInfo.id + '&courseId=' + courseId"
+                    target="_blank">
+                    写报告
+                </a>
+            </el-button>
         </div>
         <div class="canvas-ctn">
             <div class="" id="webgl"></div>
@@ -44,7 +50,8 @@ export default {
             // expURL: expURL
             gameInstance: gameInstance,
             course: null,
-            isShowReport: false
+            isShowReport: false,
+            courseId: ''
         };
     },
     computed: {
@@ -59,6 +66,7 @@ export default {
     },
     created() {
         console.log(this.$route.params);
+        this.courseId = this.$route.params.courseId;
         this.initWebgl();
     },
     
@@ -100,7 +108,10 @@ export default {
             gameInstance.SetFullscreen(1);
         },
         async getCourse() {
-            await fetch(localURLBase + '/itemController/listById' + object2Query({id: this.$route.params.courseId})).then((RES) => {
+            await fetch(localURLBase + '/itemController/listById' + object2Query({id: this.$route.params.courseId}), {
+                mode: 'cors',
+                credentials: 'include'
+            }).then((RES) => {
                 return RES.json();
             }).then((res) => {
                 if (res.status === 200) {
