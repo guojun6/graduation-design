@@ -54,7 +54,7 @@ export default {
     methods: {
         getPowerList() {
             // fetch(localURLBase + '/api/managePower')
-            fetch(devURLBase + '/functionController/findMenu').then(function(RES) {
+            fetch(localURLBase + '/functionController/findMenu').then(function(RES) {
                 return RES.json();
             }).then((res) => {
                 if (res.status !== 200) {

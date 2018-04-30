@@ -32,18 +32,152 @@ html, body {
 }
 .manager {
 	height: 100%;
-	height: calc(100% - 18px);
+}
+.top-header {
+    display: flex;
+    height: 80px;
+    align-items: center;
+    justify-content: space-between;
+    background: #4b77ff;
+	.title {
+		display: flex;
+		align-items: center;
+	}
+	.logo {
+		height: 80px;
+		margin-right: 20px;
+		> img {
+			height: 100%;
+		}
+	}
+	.site-name {
+		padding-left: 20px;
+		font-size: 20px;
+		font-weight: bold;
+		color: #fff;
+	}
+	.nav {
+		display: flex;
+		> li {
+			margin: 4px;
+			> a {
+				display: block;
+				padding: 10px 20px;
+				border-bottom: 1px solid transparent;
+				color: #fff;
+				&:hover {
+					border-bottom-color: #eaad32;
+				}
+			}
+		}
+	}
+	.account {
+		position: relative;
+		margin-right: 16px;
+		&:hover {
+			.user-operate {
+				display: block;
+			}
+		}
+		.user-operate {
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			width: 80%;
+			border: 1px solid #ccc;
+			border-radius: 6px;
+			background: #fff;
+			> li {
+				padding: 6px 10px;
+				text-align: center;
+				cursor: pointer;
+				> a {
+					color: inherit;
+				}
+				&:hover {
+					background: #92b4f7;
+					color: #fff;
+				}
+			}
+		}
+	}
+	.btn-account {
+		padding: 6px 0;
+		width: 100px;
+		border-radius: 6px;
+		line-height: 1.8;
+		border: 0 none;
+		background: #FFA500;
+		cursor: pointer;
+		&:hover {
+			background: #efefef;
+			> a {
+				color: #333;
+			}
+		}
+		> a {
+			color: #fff;
+		}
+	
+	}
+	.user-info {
+		font-size: 14px;
+	}
+}
+#user-name {
+	color: #ecc118;
 }
 .content {
 	display: flex;
 	height: 100%;
+	height: calc(100% - 80px);
 }
 .catalog {
 	flex: 0 0 210px;
+	border-right: 1px solid #ccc;
 }
+#catalog-list {
+	.triangle {
+		border-left: 10px solid #333;
+		border-top: 5px solid transparent;
+		border-bottom: 5px solid transparent;
+		margin-right: 10px;
+		&.active {
+			transform: rotate(90deg);
+		}
+	}
+	.first-level {
+		// padding: 10px;
+		border-bottom: 1px solid #fefefe;
+		font-weight: bold;
+		cursor: pointer;
+	}
+	.cat-title {
+		display: flex;
+		align-items: center;
+		padding: 4px;
+		background: #92b4f7;
+	}
+	.second-level {
+		padding: 2px 14px;
+		font-weight: initial;
+		cursor: pointer;
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
 .main-ctn {
 	flex-grow: 1;
 	height: 100%;
+}
+.no-iframe {
+	padding: 40px;
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
 }
 #iframe {
 	width: 100%;

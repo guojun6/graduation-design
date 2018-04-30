@@ -62,6 +62,18 @@
             background: #f08622;
         }
     }
+    .input-file {
+		position: absolute;
+		left: -100000px;
+	}
+	.input-file-show {
+		display: inline-block;
+		border: 1px solid #aaa;
+        width: 180px;
+		height: 19px;
+        padding: 4px;
+        border-radius: 6px;
+	}
 }
 .textarea-box {
     padding: 10px;

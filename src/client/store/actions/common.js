@@ -10,14 +10,22 @@ export default {
         context.commit(SET_TOAST, payload);
     },
     // 设置用户信息
-    setUserInfo(context) {
-        fetch(devURLBase + '/userController/getUserInfo').then((RES) => {
+    async setUserInfo(context, data) {
+        if (data) {
+            context.commit(SET_USER_INFO, data.info);
+            context.commit(SET_IS_LOGIN, data.isLogin);
+            return;
+        }
+        await fetch(localURLBase + '/userController/getUserInfo'/* + '?l=1'*/, {
+            mode: 'cors',
+            credentials: 'include'
+        }).then((RES) => {
             return RES.json();
         }).then((res) => {
-            if (res.status === 200) {
-                context.commit(SET_USER_INFO, res.data);
+            if (res[0].status === 200) {
+                context.commit(SET_USER_INFO, res[0].data);
                 context.commit(SET_IS_LOGIN, true);
-            } else if (res.status === 300) {
+            } else if (res[0].status === 300) {
                 context.commit(SET_IS_LOGIN, false);
             }
         }).catch((err) => {

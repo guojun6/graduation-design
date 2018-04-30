@@ -1,14 +1,15 @@
 var PID = 'pid';
 var PID2 = 'parentId';
 
-var arrangeLevelList = function(rawList) {
+var arrangeLevelList = function(rawList, IS_PID) {
     var resList = [],
         len = rawList.length,
         i = 0,
-        idIndex = {};
-
+        idIndex = {},
+        PIDD = IS_PID ? PID : PID2;
+console.log(PIDD)
     for (; i < len; i++) {
-        if (rawList[i][PID2] == 0) {
+        if (rawList[i][PIDD] == 0) {
             resList.push(rawList[i]);
             idIndex[rawList[i]['id']] = resList.length - 1;
         }
@@ -16,15 +17,14 @@ var arrangeLevelList = function(rawList) {
 
     var tempIndex;
     for (i = 0; i < len; i++) {
-        if (rawList[i][PID2] != 0) {
-            tempIndex = idIndex[rawList[i][PID2]];
+        if (rawList[i][PIDD] != 0) {
+            tempIndex = idIndex[rawList[i][PIDD]];
             if (!resList[tempIndex].child) {
                 resList[tempIndex].child = [];
             }
             resList[tempIndex].child.push(rawList[i]);
         }
     }
-    console.log(resList)
     return resList;
 };
 // 深度复制一个对象
@@ -58,8 +58,8 @@ var simpleDeepCopy = function(item) {
 var insertSort = function(array, type) {
     var i, j, l, temp;
     for (i = 1, l = array.length; i < l; i++) {
-        let index;
-        let item = array[i];
+        var index;
+        var item = array[i];
         if (type === 'order') {
                 for (j = i - 1; j >= 0; j--) {
                     if (item < array[j]) {

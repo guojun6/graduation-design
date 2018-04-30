@@ -5,35 +5,37 @@
         <script src="../../../libs/require/2.1.18/require.js"></script>
     </head>
     <body>
-        <div>
-            <header>实验列表</header>
-            <div>
-                <button>编辑</button>
-                <button>删除</button>
+        <div class="manage-all-course">
+            <div class="btn-ctn">
+                <button class="btn-operate" id="btn-edit">编辑</button>
+                <button class="btn-operate" id="btn-del">删除</button>
             </div>
-            <table>
+            <table class="course-list">
                 <thead>
                     <tr>
-                        <th><input type="checkbox"></th>
+                        <th><input id="select-all" type="checkbox"></th>
                         <th>实验ID</th>
-                        <th>实验指导老师</th>
+                        <th>实验名称</th>
+                        <th>实验老师ID</th>
+                        <th>实验老师名称</th>
                         <th>实验类目</th>
-                        <th>状态</th>
-                        <th>创建时间</th>
-                        <th>更新时间</th>
+                        <th title="1正常，2待上线，3删除">实验状态</th>
+                        <th title="1代表允许，2代表不允许">是否允许访客访问</th>
                     </tr>
                 </thead>
+                <tbody id="course-list"></tbody>
             </table>
             <div class="page-container">
                 <span class="btn-page" id="btn-page-index">首页</span>
                 <span class="btn-page" id="btn-page-prev">上一页</span>
-                <span>第<span id="now-page">1</span>页；</span>
-                <span>共<span id="page-count"></span>页</span>
+                <span class="page-show">第<span id="now-page">1</span>页；</span>
+                <span class="page-show">共<span id="page-count"></span>页</span>
                 <span class="btn-page" id="btn-page-next">下一页</span>
                 <span class="btn-page" id="btn-page-tail">尾页</span>
-                <span>
+                <span class="go-area">
                     <button id="btn-go-page">跳到</button>
                     <input id="num-of-page" type="number">
+                    <span>页</span>
                 </span>
                 <span class="btn-page" id="btn-page-refresh">刷新</span>
             </div>
@@ -41,6 +43,16 @@
         <div class="toast-ctn">
             <p class="toast-txt"></p>
         </div>
+        <article class="barrier hide">
+            <section class='ctn' id="alert">
+                <div class="title">确定删除吗</div>
+                <div class="body"></div>
+                <div class='btn-box'>
+                    <div class='btn-ensure'>确定</div>
+                    <div class='btn-cancel'>取消</div>
+                </div>
+            </section>
+        </article>
         <!--SCRIPT_PLACEHOLDER-->
         <script>
             require(['./index'], function(script) {

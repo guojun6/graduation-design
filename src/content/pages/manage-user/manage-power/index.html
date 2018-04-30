@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
         <title>T</title>
         <script src="../../../libs/require/2.1.18/require.js"></script>
     </head>
     <body>
         <div class="manage-power">
-            <header>
+            <header class="btn-ctn">
                 <button class="btn-operate" id="btn-add">添加</button>
                 <button class="btn-operate" id="btn-edit">修改</button>
                 <button class="btn-operate" id="btn-del">删除</button>
             </header>
-            <table>
+            <table class="power-table">
                 <thead>
                     <tr>
                         <th>
@@ -24,8 +25,24 @@
                         <th>描述</th>
                     </tr>
                 </thead>
-                <tbody id="power-list"></tbody>
+                <tbody id="power-list">
+                    
+                </tbody>
             </table>
+            <div class="page-container">
+                <span class="btn-page" id="btn-page-index">首页</span>
+                <span class="btn-page" id="btn-page-prev">上一页</span>
+                <span class="page-show">第<span id="now-page">1</span>页；</span>
+                <span class="page-show">共<span id="page-count"></span>页</span>
+                <span class="btn-page" id="btn-page-next">下一页</span>
+                <span class="btn-page" id="btn-page-tail">尾页</span>
+                <span class="go-area">
+                    <button id="btn-go-page">跳到</button>
+                    <input id="num-of-page" type="number">
+                    <span>页</span>
+                </span>
+                <span class="btn-page" id="btn-page-refresh">刷新</span>
+            </div>
         </div>
         <div class="barrier hide">
             <div id="dialog-edit">
@@ -33,30 +50,42 @@
                     <span id="dialog-tittle"></span>
                     <span class="btn-normal-close"></span>
                 </div>
-                <div class="input-control">
-                    <label class="input-name">权限名称：</label>
-                    <input id="power-name" type="text"/>
-                </div>
-                <div class="input-control">
-                    <label class="input-name">描述：</label>
-                    <input id="power-description" type="text"/>
-                </div>
-                <div class="input-control">
-                    <label class="input-name">对应页面：</label>
-                    <input id="power-page" type="text"/>
-                </div>
-                <div class="input-control">
-                    <label class="input-name">父级权限ID：</label>
-                    <input id="power-pid" type="text"/>
-                </div>
-                <div class="input-control">
-                    <button id="save-power">保存</button>
+                <div class="control-box">
+                    <div class="input-control">
+                        <label class="input-name">权限名称：</label>
+                        <input id="power-name" type="text"/>
+                    </div>
+                    <div class="input-control">
+                        <label class="input-name">描述：</label>
+                        <input id="power-description" type="text"/>
+                    </div>
+                    <div class="input-control">
+                        <label class="input-name">对应页面：</label>
+                        <input id="power-page" type="text"/>
+                    </div>
+                    <div class="input-control">
+                        <label class="input-name">父级权限ID：</label>
+                        <input id="power-pid" type="text"/>
+                    </div>
+                    <div class="input-control">
+                        <button id="save-power">保存</button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="toast-ctn">
             <p class="toast-txt"></p>
         </div>
+        <article class="barrier hide">
+            <section class='ctn' id="alert">
+                <div class="title">确定删除吗</div>
+                <div class="body"></div>
+                <div class='btn-box'>
+                    <div class='btn-ensure'>确定</div>
+                    <div class='btn-cancel'>取消</div>
+                </div>
+            </section>
+        </article>
         <!--SCRIPT_PLACEHOLDER-->
         <script>
             require(['./index'], function(script) {

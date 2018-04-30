@@ -6,32 +6,36 @@
     </head>
     <body>
         <article class="manager">
-            <header>
-                <div>第一虚拟课堂管理后台</div>
-            </header>
+            <section class="top-header">
+                <div class="title">
+                    <div class="site-name">第一虚拟课堂管理后台</div>
+                </div>
+                
+                <div class="account">
+                    <button class="btn-account">
+                        <a href="/sp/pages/account/">登录/注册</a>
+                    </button>
+                    <div class="user-info hide">
+                        <span><span id="user-name"></span>，欢迎您</span>
+                        <img src="">
+                    </div>
+                    <ul class="user-operate">
+                        <li>
+                            <a href="#">个人设置</a>
+                        </li>
+                        <li id="logout">退出</li>
+                    </ul>
+                </div>
+            </section>
             <section class="content">
                 <aside class="catalog">
                     <ul id="catalog-list">
-                        <li
-                            class="fist-level"
-                            v-for="(item, index) in powerList"
-                            :key="index">
-                            <div>{{item.name}}</div>
-                            <ul v-if="item.child">
-                                <li 
-                                    class="second-level"
-                                    v-for="(childItem, index) in item.child"
-                                    :key="index"
-                                    @click="setManagePage(childItem.url)">
-                                    {{childItem.name}}
-                                </li>
-                            </ul>
-                        </li>
+                        
                     </ul>
                 </aside>
                 <main class="main-ctn">
-                    <div class="hide">欢迎来到第一虚拟课堂管理后台</div>
-                    <iframe class="" id="iframe" src="/sp/pages/manage-user/manage-power" frameborder="0"></iframe>
+                    <div class=" no-iframe">欢迎来到第一虚拟课堂管理后台</div>
+                    <iframe class="" id="iframe" src="" frameborder="0"></iframe>
                 </main>
             </section>
         </article>

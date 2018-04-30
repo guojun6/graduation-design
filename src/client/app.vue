@@ -27,5 +27,6 @@ export default {
 <style lang="scss" scoped>
 .app {
     min-width: 800px;
+    height: 100%;
 }
 </style>

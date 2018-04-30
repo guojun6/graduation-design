@@ -26,7 +26,7 @@ app.use(hotMiddleware)
 
 app.use(express.static(path.resolve(__dirname, '../dist')))
 
-app.use('/api', router)
+app.use('/', router)
 
 app.listen(4000, () => {
     console.log('listening in port 4000')

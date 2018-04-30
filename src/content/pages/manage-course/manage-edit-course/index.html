@@ -24,10 +24,12 @@
                     <option value="2">暂不上线</option>
                 </select>
             </div>
-            <div class="input-control">
-                <label class="input-name">老师名称：</label>
-                <input id="test-teacher" type="text"/>
-            </div>
+            <!--
+                <div class="input-control">
+                    <label class="input-name">老师名称：</label>
+                    <input id="test-teacher" type="text"/>
+                </div>
+            -->
             <div class="input-control">
                 <label class="input-name">是否允许访客访问：</label>
                 <select id="allow-visitor">
@@ -35,12 +37,21 @@
                     <option value="0">不允许</option>
                 </select>
             </div>
+            <div class="input-control">
+                <label class="input-name">入口图片：</label>
+                <div class="input-file-show" id="power-path-show"></div>
+                <input class="input-file" id="power-path" type="file"/>
+            </div>
+            <div class="input-control">
+                <label class="input-name">webgl文件路径：</label>
+                <input id="test-webgl" type="text"/>
+            </div>
             <div class="textarea-box">
                 <textarea
                     id="editor_id"
                     name="content"
                     style="width:100%;height:400px;">
-                    &lt;strong&gt;HTML内容&lt;/strong&gt;
+                   
                 </textarea>
             </div>
             <div class="input-control">
@@ -52,6 +63,7 @@
         </div>
         <!--SCRIPT_PLACEHOLDER-->
         <script>
+            var editorReady = false;
             require(['./index'], function(script) {
                 script.init();
             });
@@ -61,11 +73,11 @@
                     //指定上传文件参数名称
                     filePostName  : "uploadFile",
                     //指定上传文件请求的url。
-                    uploadJson : '/pic/upload',
+                    // uploadJson : 'http://192.168.43.36/pic/upload',
                     //上传类型，分别为image、flash、media、file
                     dir : "image"
                 });
-                
+                editorReady = true;
             });
             
         </script>

@@ -21,7 +21,7 @@ module.exports = {
     },
     output: {
         path: path.resolve(__dirname, '../dist/client'),
-        publicPath: './',
+        // publicPath: '/client/',
         chunkFilename: 'js/[name]/[chunkhash].js'
     },
     plugins: [
@@ -31,8 +31,9 @@ module.exports = {
         new webpack.DefinePlugin({
             'contentURL': JSON.stringify('/sp/pages/'),
             'localURLBase': JSON.stringify('http://localhost:4000'),
-            'devURLBase': JSON.stringify('http://192.168.199.195:8080'),
-            'prodURLBase': JSON.stringify('')
+            'devURLBase': JSON.stringify('http://192.168.43.36:8080'),
+            'prodURLBase': JSON.stringify(''),
+            'expURL': JSON.stringify('')
         })
     ],
     module: {

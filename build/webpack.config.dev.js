@@ -10,6 +10,7 @@ var exp = merge(baseConfig, {
     },
     output: {
         filename: 'js/[name]-[hash].js',
+        publicPath: '/'
     },
     plugins: [
         new webpack.DefinePlugin({
