@@ -24,7 +24,7 @@ var index = {
             },
             success: function(res) {
                 if (res.status === 200) {
-                    location.href = '/graduation-design/dist/sp/pages/account';
+                    location.href = '/sp/pages/account';
                 } else {
                     alert('更改失败，code:' + res.status);
                 }

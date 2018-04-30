@@ -16,7 +16,7 @@ fis.match('*', {
 
 fis.match('*', {
     release: '/sp/$0',
-    url: '/graduation-design/dist/sp$0'
+    // url: '/graduation-design/dist/sp$0'
 });
 // fis.match('**', { relative: true })
 // 使用cdn时开发调试部署-前端资源发布目录设置

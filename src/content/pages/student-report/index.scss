@@ -1,0 +1,112 @@
+@import "../../../assets/style/base";
+@import "../../assets/common";
+
+html, body {
+    height: 100%;
+}
+.barrier {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.2);
+}
+.toast-ctn {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 50%;
+	margin: auto;
+	width: 220px;
+	padding: 10px 20px;
+	z-index: -1;
+	transform: translate3d(0,-50%,0);
+	color: #f0f0f0;
+	font-size: 18px; /*px*/
+	text-align: center;
+	background: rgba(33,33,33,0.8);
+	transition: opacity 0.8s ease;
+	border-radius: 8px;
+	opacity: 0;
+	&.show {
+		opacity: 1;
+		z-index: 9999;
+	}
+}
+
+.input-control {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    > .input-name {
+        margin-right: 10px;
+        width:6em;
+        text-align: right;
+    }
+    > input[type=text], > input[type=password] {
+        border: 1px solid #aaa;
+        width: 180px;
+        padding: 4px;
+        border-radius: 6px;
+    }
+    > select {
+        width: 100px;
+        padding: 4px;
+        border: 1px solid #aaa;
+        border-radius: 6px;
+    }
+    > button {
+        border: 1px solid #FFA500;
+        padding: 6px 0;
+        width: 100px;
+        border-radius: 6px;
+        line-height: 1.8;
+        color: #efefef;
+        background: #FFA500;
+        cursor: pointer;
+        &:hover {
+            color: #fff;
+            border-color: #f08622;
+            background: #f08622;
+        }
+    }
+}
+.textarea-box {
+    padding: 10px;
+}
+.manage-power {
+	width: 100%;
+	overflow: auto;
+}
+
+
+.btn-ctn {
+	padding: 10px 0;
+}
+.btn-operate {
+	margin-right: 10px;
+	border: 1px solid #FFA500;
+	padding: 6px 0;
+	width: 100px;
+	border-radius: 6px;
+	line-height: 1.8;
+	color: #efefef;
+	background: #FFA500;
+	cursor: pointer;
+	&:hover {
+		color: #fff;
+		border-color: #f08622;
+		background: #f08622;
+	}
+}
+
+.control-box {
+	width: 450px;
+	.input-control {
+		margin: auto;
+	}
+}
+

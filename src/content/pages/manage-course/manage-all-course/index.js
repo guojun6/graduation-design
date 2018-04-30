@@ -219,7 +219,7 @@ var index = {
             index.setToast('请选择一个权限功能进行编辑');
             return;
         }
-        location.href = '/graduation-design/dist/sp/pages/manage-course/manage-edit-course?id=' + data.selectCourseId[0];
+        location.href = '/sp/pages/manage-course/manage-edit-course?id=' + data.selectCourseId[0];
     }
     
 };

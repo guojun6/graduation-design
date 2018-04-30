@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>T</title>
+        <script src="../../libs/kindeditor/kindeditor-all.js"></script>
+        <script src="../../libs/kindeditor/lang/zh-CN.js"></script>
+        <script src="../../libs/require/2.1.18/require.js"></script>
+    </head>
+    <body>
+        <div class="manage-power">
+            <header class="btn-ctn">
+                <button class="btn-operate" id="btn-save">保存</button>
+            </header>
+            <div class="textarea-box">
+                <textarea
+                    id="editor_id"
+                    name="content"
+                    style="width:100%;height:400px;">
+                </textarea>
+            </div>
+        </div>
+        
+        <div class="toast-ctn">
+            <p class="toast-txt"></p>
+        </div>
+        <!--SCRIPT_PLACEHOLDER-->
+        <script>
+            require(['./index'], function(script) {
+                script.init();
+            });
+            var editorReady = false;
+
+            KindEditor.ready(function(K) {
+                window.editor = K.create('#editor_id', {
+                    basePath: '/sp/libs/kindeditor/',
+                    //指定上传文件参数名称
+                    filePostName  : "uploadFile",
+                    //指定上传文件请求的url。
+                    uploadJson : '/reportController/pic/upload',
+                    //上传类型，分别为image、flash、media、file
+                    dir : "image"
+                });
+                console.log('dsa')
+                editorReady = true;
+            });
+        </script>
+    </body>
+</html>

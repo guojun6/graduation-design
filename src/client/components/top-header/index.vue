@@ -44,7 +44,7 @@
             <el-button
                 class="btn-account"
                 v-if="!isLogin">
-                <a href="/graduation-design/dist/sp//sp//sp//sp//sp/pages/account/">登录/注册</a>
+                <a href="/sp/pages/account/">登录/注册</a>
             </el-button>
             <div
                 class="user-info"
