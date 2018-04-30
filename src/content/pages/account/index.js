@@ -1,5 +1,10 @@
 var $ = require('jquery');
-
+var URLBase = {
+    'contentURL': '/sp/pages/',
+    'localURLBase': 'http://localhost:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
+    'prodURLBase': ''
+}
 /**
  * @require './index.scss'
  */
@@ -57,7 +62,7 @@ var index = {
             $('.error-tips').text('请输入密码').removeClass('hide');
             return;
         }
-        $.ajax(apiBase + '/loginController/login', {
+        $.ajax(URLBase.localURLBase + '/loginController/login', {
             type: 'POST',
             data: {
                 email: email,
@@ -119,11 +124,11 @@ var index = {
         }
         if (!(phone.length === 0)) ajaxData.phone = phone;
         
-        $.ajax(apiBase + '/registerController/register', {
+        $.ajax(URLBase.localURLBase + '/registerController/register', {
             type: 'POST',
             data: ajaxData,
             success: function(data) {
-                $.ajax(apiBase + '/loginController/login', {
+                $.ajax(URLBase.localURLBase + '/loginController/login', {
                     type: 'POST',
                     data: {
                         email: email,
