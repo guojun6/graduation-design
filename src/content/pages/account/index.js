@@ -1,8 +1,8 @@
 var $ = require('jquery');
 var URLBase = {
     'contentURL': '/sp/pages/',
-    'localURLBase': 'http://192.168.43.36:8080',
-    'devURLBase': 'http://192.168.43.36:8080',
+    'localURLBase': 'http://localhost:8080',
+    'devURLBase': 'http://localhost:8080',
     'prodURLBase': ''
 }
 /**
