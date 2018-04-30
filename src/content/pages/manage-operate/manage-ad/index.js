@@ -7,8 +7,8 @@ require('fetch');
  */
 var baseURL = {
     'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:4000',
-    'localURLBase2': 'http://192.168.43.36:8080',
+    'localURLBase': 'http://localhost:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 };
 var data = {
