@@ -5,7 +5,7 @@ var $ = require('jquery');
  */
 var baseURL = {
     'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
+    'localURLBase': 'http://192.168.43.36:8080',
     'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 };
@@ -219,7 +219,7 @@ var index = {
             index.setToast('请选择一个权限功能进行编辑');
             return;
         }
-        location.href = '/sp/pages/manage-course/manage-edit-course?id=' + data.selectCourseId[0];
+        location.href = '/graduation-design/dist/sp/pages/manage-course/manage-edit-course?id=' + data.selectCourseId[0];
     }
     
 };

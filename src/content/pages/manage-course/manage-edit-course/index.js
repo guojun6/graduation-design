@@ -11,7 +11,7 @@ var arrangeLevelList = require('utils').arrangeLevelList;
 
 var baseURL = {
     'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
+    'localURLBase': 'http://192.168.43.36:8080',
     'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 };

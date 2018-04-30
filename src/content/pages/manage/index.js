@@ -3,7 +3,7 @@ var utils = require('utils');
 
 var URLBase = {
     'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
+    'localURLBase': 'http://192.168.43.36:8080',
     'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 }
@@ -74,7 +74,7 @@ var index = {
                     $('.user-info').removeClass('hide').find('img').attr('src', res.data.profilehead);
                     $('#user-name').text(res.data.username);
                 } else if (res.status === 300) {
-                    location.href = '/sp/pages/account';
+                    location.href = '/graduation-design/dist/sp/pages/account';
                 }
             }
         });
@@ -111,7 +111,7 @@ var index = {
             $.ajax('/loginController/logout', {
                 success: function(res) {
                     if (res.status === 200) {
-                        location.href = '/sp/pages/account';
+                        location.href = '/graduation-design/dist/sp/pages/account';
                     }
                 }
             });
