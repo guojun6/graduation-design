@@ -129,70 +129,91 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home {
-    font-size: 16px;
-}
-.slider-ctn {
-    width: 100%;
-    height: 300px;
-}
-.entry-box {
-    padding: 30px 0 50px;
-    text-align: center;
-}
-
-
-.course-entry {
-    position: relative;
-    display: inline-block;
-    width: 22%;
-    margin: 0 18px;
-    padding-top: 22%; 
-    cursor: pointer;
-    &:hover {
-        .txt-box {
-            font-weight: bold;
+    .home {
+        font-size: 16px;
+    }
+    .slider-ctn {
+        width: 100%;
+        height: 300px;
+    }
+    .entry-box {
+        padding: 30px 0 50px;
+        text-align: center;
+    }
+    @-webkit-keyframes zoom {
+        from {
+            transform: scale(1);
+        }
+        to {
+            transform: scale(1.2);
         }
     }
-    .img-box {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #ccc;
-        img {
+    @keyframes zoom {
+        from {
+            transform: scale(1);
+        }
+        to {
+            transform: scale(1.2);
+        }
+    }
+    .course-entry {
+        position: relative;
+        display: inline-block;
+        width: 22%;
+        margin: 0 18px;
+        padding-top: 22%; 
+        cursor: pointer;
+        &:hover {
+            .txt-box {
+                font-weight: bold;
+            }
+            img {
+                animation-name: zoom;
+            }
+        }
+        .img-box {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            background: #ccc;
+            overflow: hidden;
+            img {
+                width: 100%;
+                height: 100%;
+                animation-duration:  0.8s;
+                animation-iteration-count: infinite;
+                animation-direction: alternate;
+            }
+        }
+        .txt-box {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-width: 300px;
+            padding: 10px 0;
+            color: #fff;
+            background: #d75f1d;
         }
     }
-    .txt-box {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        max-width: 300px;
-        padding: 10px 0;
-        color: #fff;
-        background: #d75f1d;
+
+
+    .el-carousel__item:nth-child(2n) {
+        background-color: #99a9bf;
     }
-}
 
-
-.el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
-}
-.banner-img-box {
-    display: block;
-    height: 100%;
-}
-.banner-img {
-    width: 100%;
-    height: 100%;
-}
+    .el-carousel__item:nth-child(2n+1) {
+        background-color: #d3dce6;
+    }
+    .banner-img-box {
+        display: block;
+        height: 100%;
+    }
+    .banner-img {
+        width: 100%;
+        height: 100%;
+    }
 </style>
 

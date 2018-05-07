@@ -8,7 +8,10 @@ var baseURL = {
 /**
  * @require './index.scss'
  */
-
+var data = {
+    timer: null
+}
+var emailRep = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
 var index = {
     init: function() {
         this.listener();
@@ -16,7 +19,25 @@ var index = {
     listener: function() {
         $('#save').on('click', this.save);
     },
+    setToast: function(txt) {
+        $('.toast-txt').text(txt);
+        $('.toast-ctn').addClass('show');
+        if (data.timer) {
+            clearTimeout(data.timer);
+        }
+        data.timer = setTimeout(function() {
+            $('.toast-ctn').removeClass('show');
+        }, 2000);
+    },
     save: function(e) {
+        if (!emailRep.test($('#email').val())) {
+            index.setToast('请输入正确格式的邮箱');
+            return;
+        }
+        if ($('#password').val().length < 6 || $('#password').val().length > 16) {
+            index.setToast('请输入6-16个字符的密码');
+            return;
+        }
         $.ajax(baseURL.localURLBase + '/registerController/changePassword', {
             data: {
                 email: $('#email').val(),

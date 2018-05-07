@@ -34,6 +34,14 @@ export default {
     },
     methods: {
         submit() {
+            var emailRep = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            if (!emailRep.test(this.email)) {
+                this.setToast({
+                    txt: '请输入正确的邮箱',
+                    showTime: Date.now()
+                });
+                return;
+            }
             this.isSubmited = true;
             fetch(localURLBase + '/registerController/checkEmail' + object2Query({
                 email: this.email

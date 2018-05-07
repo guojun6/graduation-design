@@ -118,6 +118,13 @@ export default {
         },
         save() {
             console.log(this.username)
+            if (this.username.length < 2 || this.username.length > 8) {
+                this.setToast({
+                    txt: '请输入2-8个字符的用户名',
+                    showTime: Date.now()
+                });
+                return;
+            }
             var data = {
                 id: this.userInfo.id,
                 username: this.username,

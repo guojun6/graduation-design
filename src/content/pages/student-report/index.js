@@ -34,26 +34,27 @@ var index = {
 
         this.listener();
         this.getReports();
+        this.getCourseInfo();
     },
     listener: function() {
         $('#btn-save').on('click', function() {
-            var url, data;
+            var url, ajaxdata;
             if (data.reportId) {
                 url = '/reportController/updateByStudent';
-                data = {
+                ajaxdata = {
                     id: data.reportId,
                     desc: editor.html()
                 };
             } else {
                 url = '/reportController/add';
-                data = {
+                ajaxdata = {
                     studentId: data.studentId,
                     itemId: data.courseId,
                     desc: editor.html()
                 };
             }
             $.ajax(baseURL.localURLBase + url, {
-                data: data,
+                data: ajaxdata,
                 xhrFields: {
                     withCredentials: true
                 },
@@ -67,8 +68,14 @@ var index = {
             })
         });
         $('#btn-preshow').on('click', function() {
-
+            $('#preshow').html(editor.html());
+            $('.preshow-box').removeClass('hide');
         });
+        $('.preshow-box').on('click', function(e) {
+            if (e.target === this) {
+                $(this).addClass('hide');
+            }
+        })
     },
     getReports: function() {
         $.ajax(baseURL.localURLBase + '/reportController/listByStudent', {
@@ -81,6 +88,7 @@ var index = {
                     return;
                 }
                 for (var i = 0; i < res.data.length; i++) {
+                    console.log(res.data[i].itemId, data.courseId)
                     if (res.data[i].itemId == data.courseId) {
                         data.report = res.data[i].desc;
                         data.reportId = res.data[i].id;
@@ -114,7 +122,19 @@ var index = {
         }
         return -1;
     },
-    
+    getCourseInfo: function() {
+        $.ajax('/itemController/listById', {
+            xhrFields: {
+                withCredentials: true
+            },
+            data: {
+                id: data.courseId
+            },
+            success: function(res) {
+                $('.title').text('实验《'+ res.data.name +'》的报告');
+            }
+        })
+    }
 };
 
 module.exports = index;

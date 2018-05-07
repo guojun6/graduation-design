@@ -2,6 +2,7 @@ var $ = require('jquery');
 
 /**
  * @require './index.scss'
+ * @require '../../../libs/kindeditor/themes/default/default.css'
  */
 var baseURL = {
     'contentURL': '/sp/pages/',
@@ -16,14 +17,24 @@ var data = {
     courseList: [],
     selectCourseId: [],
     alertSignal: 'del',
-    allPage: 0,
-    nowPage: 1
+    courseId: null
 };
 
 var index = {
     init: function() {
+        var queryArr = location.search.slice(1).split('&'), 
+            temp;
+        for (var i = 0; i < queryArr.length; i++) {
+            temp = queryArr[i].split('=');
+            if (temp[0] === 'courseId') {
+                data.courseId = temp[1];
+            }
+        }
+        console.log(data.courseId)
         this.getTestList(1);
         this.listener();
+
+        
     },
     listener: function() {
         // 页码
@@ -107,33 +118,36 @@ var index = {
             
             console.log(data.selectCourseId)
         });
-        // 删除权限
-        $('#btn-del').on('click', function(e) {
-            if (data.selectCourseId.length === 0) {
-                index.setToast('请选择至少一个权限功能进行删除');
-                return;
-            }
-            $('#alert')
-                .closest('.barrier')
-                .removeClass('hide')
-                .find('.body')
-                .text('编号为' + data.selectCourseId.join(', ') + '的权限功能吗？');
-        });
-        // 编辑权限
-        $('#btn-edit').on('click', function(e) {
-            index.openDialog();
-        });
         // alert
-        $('.barrier').on('click', function() {
-            console.log(this, e)
+        $('.barrier').on('click', function(e) {
+            if (e.target === this) {
+                $(this).addClass('hide');
+            }
         });
-        $('#alert .btn-ensure').on('click', index.clkEnsure);
-        $('#alert .btn-cancel').on('click', index.clkCancel);
-        $('#btn-report').on('click', index.readReport);
+        $('#btn-check').on('click', index.checkReport);
+        $('.preshow-box').on('click', function(e) {
+            if (e.target === this) {
+                $(this).addClass('hide');
+            }
+        });
+        $('#btn-edit').on('click', index.reviewReport);
+        $('#btn-save-review').on('click', index.saveReview);
     },
     getTestList: function(page) {
-        $.ajax(baseURL.localURLBase + '/itemController/listByTeacher', {
+        $.ajax(baseURL.localURLBase + '/itemController/listById', {
             data: {
+                id: data.courseId
+            },
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function(res) {
+                $('.course-name').text(res.data.name)
+            }
+        })
+        $.ajax(baseURL.localURLBase + '/reportController/listByItemId', {
+            data: {
+                itemId: data.courseId,
                 page: page,
                 // pageCount: 10
             },
@@ -142,25 +156,37 @@ var index = {
             },
             success: function(res) {
                 if (res.status === 200) {
-                    data.courseList = res.data;
+                    if (res.data) {
+                        data.courseList = res.data;
+                    } else {
+                        data.courseList = [];
+                    }
+                    
+                    
                     data.selectCourseId = [];
                     $('#course-list').empty();
-                    for (var i = 0, l = res.data.length; i < l; i++) {
+                    for (var i = 0, l = data.courseList.length; i < l; i++) {
                         $('#course-list').append(
                             $('<tr></tr>')
                                 .append($('<td><input class="course-check" type="checkbox"></td>'))
                                 .append($('<td>' + res.data[i].id + '</td>'))
-                                .append($('<td>' + res.data[i].name + '</td>'))
-                                .append($('<td>' + res.data[i].teacherId + '</td>'))
-                                .append($('<td>' + res.data[i].teacherName + '</td>'))
-                                .append($('<td>' + res.data[i].cid + '</td>'))
-                                .append($('<td>' + 
-                                (res.data[i].status === 1 ? '正常' : (res.data[i].status === 2 ? '下降' : '删除')) + 
-                                '</td>'))
-                                .append($('<td>' + 
-                                (res.data[i].visitorAllow == 1 ? '允许' : '不允许') +
-                                '</td>'))
-                        )
+                                .append($('<td id="student'+ i +'">' + '</td>'))
+                        );
+                        (function(i) {
+                            $.ajax(baseURL.localURLBase + '/userController/getUserInfo' + '?l=1', {
+                                data: {
+                                    id: res.data[i].studentId
+                                },
+                                xhrFields: {
+                                    withCredentials: true
+                                },
+                                success: function(res) {
+                                    if (res.status === 200) {
+                                        $('#student' + i).text(res.data.username);
+                                    }
+                                }
+                            })
+                        })(i);
                     }
                 }
                 data.allPage = res.pageCount;
@@ -183,57 +209,51 @@ var index = {
             $('.toast-ctn').removeClass('show');
         }, 2000);
     },
-    // alert
-    clkEnsure: function(e) {
-        e.stopPropagation();
-        e.preventDefault();
+    checkReport: function() {
+        if (data.selectCourseId.length !== 1) {
+            index.setToast('请选择一个权限功能进行查看');
+            return;
+        }
+        $('.preshow-box').removeClass('hide');
+        var i = index.findIndexByKey(data.courseList, 'id', data.selectCourseId[0])
 
-        // do something
-        if (data.alertSignal === 'del') {
-            $.ajax(baseURL.localURLBase + '/itemController/deleteItem', {
-                xhrFields: {
-                    withCredentials: true
-                },
-                data: {
-                    ids: data.selectCourseId.join('-')
-                },
-                success: function(res) {
-                    if (res.status !== 200) {
-                        index.setToast('删除失败 code：' + res.status);
-                        index.closeAlert();
-                    } else {
-                        location.reload();
-                    }
+        $('#preshow').html(data.courseList[i].desc);
+        $('.review').html(data.courseList[i].review);
+    },
+    reviewReport: function() {
+        if (data.selectCourseId.length !== 1) {
+            index.setToast('请选择一个权限功能进行查看');
+            return;
+        }
+        $('.textarea-box').closest('.barrier').removeClass('hide');
+        var i = index.findIndexByKey(data.courseList, 'id', data.selectCourseId[0]);
+
+        editor.html(data.courseList[i].review);
+    },
+    saveReview: function() {
+        $.ajax(baseURL.localURLBase + '/reportController/reviewReportByTeacher', {
+            data: {
+                id: data.selectCourseId[0],
+                review: editor.html()
+            },
+            success: function(res) {
+                if (res.status !== 200) {
+                    index.setToast('保存失败 code：' + res.status);
+                } else {
+                    index.setToast('保存成功');
+                    $('.textarea-box').closest('.barrier').addClass('hide');
                 }
-            })
+            }
+        })
+    },
+    findIndexByKey: function(array, key, value) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i][key] === value) {
+                return i;
+            }
         }
-    },
-    clkCancel: function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        
-        // do something
-
-        index.closeAlert();
-    },
-    closeAlert: function() {
-        $('#alert').closest('.barrier').addClass('hide');
-    },
-    openDialog: function() {
-        if (data.selectCourseId.length !== 1) {
-            index.setToast('请选择一个实验进行编辑');
-            return;
-        }
-        location.href = '/sp/pages/manage-course/manage-edit-course?id=' + data.selectCourseId[0];
-    },
-    readReport: function() {
-        if (data.selectCourseId.length !== 1) {
-            index.setToast('请选择一个权限功能进行编辑');
-            return;
-        }
-        location.href = '/sp/pages/manage-course/manage-read-report?courseId=' + data.selectCourseId[0];
+        return -1;
     }
-    
 };
 
 module.exports = index;

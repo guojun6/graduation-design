@@ -94,12 +94,14 @@ html, body {
         margin-right: 10px;
         width:6em;
         text-align: right;
+		flex: 0 0 6em;
     }
     > input[type=text], > input[type=password] {
         border: 1px solid #aaa;
         width: 180px;
         padding: 4px;
         border-radius: 6px;
+		flex: 0 0 180px;
     }
     > select {
         width: 100px;
@@ -122,6 +124,11 @@ html, body {
             background: #f08622;
         }
     }
+	.input-tip {
+		padding-left: 6px;
+		font-size: 12px;
+		color: #999;
+	} 
 }
 .manage-power {
 	width: 100%;
@@ -199,6 +206,7 @@ html, body {
 }
 
 .page-container {
+	margin-top: 18px;
 	.btn-page, button {
 		display: inline-block;
 		border: 0;

@@ -221,7 +221,9 @@ var index = {
     },
     openDialog: function() {
         if (data.openDialogType === 'add') {
-
+            $('#power-name').val('');
+            $('#power-description').val('');
+            $('#power-ids').val('');
         } else if (data.openDialogType === 'edit') {
             if (data.selectPowerListId.length !== 1) {
                 index.setToast('请选择一个权限功能进行编辑');

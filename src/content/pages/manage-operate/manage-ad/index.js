@@ -237,7 +237,11 @@ var index = {
     },
     openDialog: function() {
         if (data.openDialogType === 'addImage') {
-
+            $('#power-name').val('');
+            $('#power-desc').val('');
+            $('#power-type').val('');
+            $('#power-path-show').text('');
+            $('#power-url').val('');
         } else if (data.openDialogType === 'updateImage') {
             if (data.selectPowerListId.length !== 1) {
                 index.setToast('请选择一个权限功能进行编辑');

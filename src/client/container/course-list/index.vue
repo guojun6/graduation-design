@@ -66,7 +66,10 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import {
+    mapActions,
+    mapState,
+} from 'vuex';
 import TopHeader from '../../components/top-header';
 import BottomFooter from '../../components/bottom-footer';
 import {
@@ -89,6 +92,11 @@ export default {
             nowSecondCatId: null,
             coursePageCount: null
         };
+    },
+    computed: {
+        ...mapState([
+            'isLogin'
+        ])
     },
     components: {
         [TopHeader.name]: TopHeader,
@@ -195,7 +203,7 @@ export default {
         },
         linkToCourse(url, visitorAllow) {
             console.log(url, visitorAllow)
-            if (visitorAllow === 1) {
+            if (visitorAllow === 1 || this.isLogin) {
                 this.$router.push(url);
             } else {
                 this.setToast({
@@ -216,6 +224,7 @@ export default {
 <style lang="scss" scoped>
 .main {
     padding: 10px;
+    background: #f6f9fb;
 }
 .cat {
     .el-select {
@@ -229,7 +238,8 @@ export default {
         width: 220px;
         margin: 16px;
         border: 1px solid #ccc;
-        cursor: pointer;
+        cursor: pointer;        
+        background: #fff;
         &:hover {
             box-shadow: 0 0 10px 1px #ccc;
         }

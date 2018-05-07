@@ -8,9 +8,7 @@
     <body>
         <div class="manage-power">
             <header class="btn-ctn">
-                <button class="btn-operate" id="btn-add">添加</button>
                 <button class="btn-operate" id="btn-edit">修改</button>
-                <button class="btn-operate" id="btn-del">删除</button>
             </header>
             <table class="power-table">
                 <thead>
@@ -19,9 +17,11 @@
                             <input id="select-all" type="checkbox">
                         </th>
                         <th>ID</th>
-                        <th>角色名称</th>
-                        <th>权限功能IDs</th>
-                        <th>描述</th>
+                        <th>用户名称</th>
+                        <th>邮箱</th>
+                        <th>角色</th>
+                        <th>电话</th>
+                        <th>头像地址</th>
                     </tr>
                 </thead>
                 <tbody id="power-list">
@@ -51,19 +51,11 @@
                 </div>
                 <div class="control-box">
                     <div class="input-control">
-                        <label class="input-name">角色名称：</label>
-                        <input id="power-name" type="text"/>
-                    </div>
-                    <div class="input-control">
-                        <label class="input-name">权限功能IDs：</label>
-                        <input id="power-ids" type="text"/>
+                        <label class="input-name">角色：</label>
+                        <input id="power-role" type="text"/>
                         <span class="input-tip">
-                            <span style="color:#f00">*</span>以-为连接符填写功能权限ID，例:111-222-333
+                            <span style="color:#f00">*</span>填写一个角色ID
                         </span>
-                    </div>
-                    <div class="input-control">
-                        <label class="input-name">描述：</label>
-                        <input id="power-description" type="text"/>
                     </div>
                     <div class="input-control">
                         <button id="save-power">保存</button>

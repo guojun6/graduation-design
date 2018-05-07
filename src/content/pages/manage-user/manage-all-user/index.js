@@ -22,7 +22,7 @@ var data = {
 var index = {
     init: function() {
         this.listener();
-        this.getPowerList(1);
+        this.getRoleList(1);
     },
     listener: function() {
         // 页码
@@ -33,7 +33,7 @@ var index = {
                 return;
             }
             index.setNowPage(1);
-            index.getPowerList(1);
+            index.getRoleList(1);
         });
         $('#btn-page-prev').on('click', function(e) {
             if (data.nowPage === 1) {
@@ -41,7 +41,7 @@ var index = {
                 return;
             }
             index.setNowPage(data.nowPage - 1);
-            index.getPowerList(Number(data.nowPage));
+            index.getRoleList(Number(data.nowPage));
         });
         $('#btn-page-next').on('click', function(e) {
             if (data.nowPage === data.allPage) {
@@ -49,7 +49,7 @@ var index = {
                 return;
             }
             index.setNowPage(data.nowPage + 1);
-            index.getPowerList(Number(data.nowPage));
+            index.getRoleList(Number(data.nowPage));
         });
         $('#btn-page-tail').on('click', function(e) {
             if (data.nowPage === data.allPage) {
@@ -57,7 +57,7 @@ var index = {
                 return;
             }
             index.setNowPage(data.allPage);
-            index.getPowerList(Number(data.allPage));
+            index.getRoleList(Number(data.allPage));
         });
         $('#btn-go-page').on('click', function(e) {
             var pageNum = $('#num-of-page').val();
@@ -69,7 +69,7 @@ var index = {
                 index.setToast('请输入数字1到' + data.allPage + '');
                 return;
             }
-            index.getPowerList(Number(pageNum));
+            index.getRoleList(Number(pageNum));
             index.setNowPage(Number(pageNum));
         });
         $('#btn-page-refresh').on('click', function(e) {
@@ -105,11 +105,6 @@ var index = {
             
             console.log(data.selectPowerListId)
         });
-        // 添加权限
-        $('#btn-add').on('click', function(e) {
-            data.openDialogType = 'add';
-            index.openDialog();
-        });
         // 编辑权限
         $('#btn-edit').on('click', function(e) {
             data.openDialogType = 'edit';
@@ -122,12 +117,9 @@ var index = {
         // 保存添加或编辑
         $('#save-power').on('click', function(e) {
             var ajaxData = {
-                name: $('#power-name').val(),
-                description: $('#power-description').val(),
-                page: $('#power-page').val(),
-                pid: $('#power-pid').val()
+                name: $('#power-role').val(),
             },
-            url = baseURL.localURLBase + '/functionController/' + data.openDialogType;
+            url = baseURL.localURLBase + '/roleController/' + data.openDialogType;
             if (data.openDialogType === 'edit') {
                 ajaxData.id = data.selectPowerListId[0];
             }
@@ -144,21 +136,9 @@ var index = {
                 }
             });
         });
-        // 删除权限
-        $('#btn-del').on('click', function(e) {
-            if (data.selectPowerListId.length === 0) {
-                index.setToast('请选择至少一个权限功能进行删除');
-                return;
-            }
-            $('#alert')
-                .closest('.barrier')
-                .removeClass('hide')
-                .find('.body')
-                .text('编号为' + data.selectPowerListId.join(', ') + '的权限功能吗？');
-        });
         // alert
         $('.barrier').on('click', function() {
-            // console.log(this, e)
+            console.log(this)
         });
         $('#alert .btn-ensure').on('click', index.clkEnsure);
         $('#alert .btn-cancel').on('click', index.clkCancel);
@@ -167,54 +147,64 @@ var index = {
         data.nowPage = num;
         $('#now-page').text(num);
     },
-    getPowerList: function(page) {
-        $.ajax(baseURL.localURLBase + '/functionController/listAll', {
-            data: {
-                // pageCount: 2,
-                page: page,
-                // rows: 20
-            },
-            xhrFields: {
-                withCredentials: true
-            },
-            success: function(res) {
-                if (res.status === 200) {
-                    data.powerList = res.data;
-                    $('#power-list').empty();
-                    for (var i = 0, l = res.data.length; i < l; i++) {
-                        $('#power-list').append(
-                            $('<tr></tr>')
-                                .append($('<td><input class="power-check" type="checkbox"></td>'))
-                                .append($('<td>' + res.data[i].name + '</td>'))
-                                .append($('<td>' + res.data[i].page + '</td>'))
-                                .append($('<td>' + res.data[i].id + '</td>'))
-                                .append($('<td>' + res.data[i].pid + '</td>'))
-                                .append($('<td>' + res.data[i].description + '</td>'))
-                        )
+    getRoleList: function(page) {
+        var roleList = {};
+        (function() {
+            $.ajax('/roleController/listAll', {
+                success: function(res) {
+                    getList();
+                    if (res.status === 200) {
+                        for (var i = 0, l = res.data.length; i < l; i++) {
+                            roleList[res.data[i].id] = res.data[i].name;
+                        }
                     }
-                    data.allPage = res.pageCount;
-
-                    $('#page-count').text(data.allPage);
                 }
-            }
-        });
+            });
+        })();
+        function getList() {
+            $.ajax(baseURL.localURLBase + '/userController/listAll', {
+                data: {
+                    // pageCount: 2,
+                    page: page
+                },
+                xhrFields: {
+                    withCredentials: true
+                },
+                success: function(res) {
+                    if (res.status === 200) {
+                        data.powerList = res.data;
+                        $('#power-list').empty();
+
+                        for (var i = 0, l = res.data.length; i < l; i++) {
+                            $('#power-list').append(
+                                $('<tr></tr>')
+                                    .append($('<td><input class="power-check" type="checkbox"></td>'))
+                                    .append($('<td>' + res.data[i].id + '</td>'))
+                                    .append($('<td>' + res.data[i].username + '</td>'))
+                                    .append($('<td>' + res.data[i].email + '</td>'))
+                                    .append($('<td>' + roleList[res.data[i].role] + '</td>'))
+                                    .append($('<td>' + res.data[i].phone + '</td>'))
+                                    .append($('<td>' + res.data[i].profilehead + '</td>'))
+                            );
+                        }
+                        data.allPage = res.pageCount;
+
+                        $('#page-count').text(data.allPage);
+                    }
+                }
+            });
+        }
     },
     openDialog: function() {
         if (data.openDialogType === 'add') {
-            $('#power-name').val('');
-            $('#power-description').val('');
-            $('#power-page').val('');
-            $('#power-pid').val('');
+
         } else if (data.openDialogType === 'edit') {
             if (data.selectPowerListId.length !== 1) {
                 index.setToast('请选择一个权限功能进行编辑');
                 return;
             }
             var powerObjIndex = index.findIndexByKey(data.powerList, 'id', data.selectPowerListId[0]);
-            $('#power-name').val(data.powerList[powerObjIndex]['name']);
-            $('#power-description').val(data.powerList[powerObjIndex]['description']);
-            $('#power-page').val(data.powerList[powerObjIndex]['page']);
-            $('#power-pid').val(data.powerList[powerObjIndex]['pid']);
+            $('#power-role').val(data.powerList[powerObjIndex]['role']);
         }
         $('#dialog-edit').closest('.barrier').removeClass('hide');
     },
@@ -238,18 +228,22 @@ var index = {
         return -1;
     },
     // alert
-    clkEnsure: function(e) {
+    clkEnsure(e) {
         e.stopPropagation();
         e.preventDefault();
 
         // do something
         if (data.alertSignal === 'del') {
-            $.ajax(baseURL.localURLBase + '/functionController/delete', {
+            if (data.selectPowerListId.length !== 1) {
+                index.setToast('请选择一个权限功能进行删除');
+                return;
+            }
+            $.ajax(baseURL.localURLBase + '/roleController/delete', {
                 xhrFields: {
                     withCredentials: true
                 },
                 data: {
-                    ids: data.selectPowerListId.join('-')
+                    id: data.selectPowerListId[0]
                 },
                 success: function(res) {
                     if (res.status !== 200) {
@@ -262,7 +256,7 @@ var index = {
             })
         }
     },
-    clkCancel: function(e) {
+    clkCancel(e) {
         e.stopPropagation();
         e.preventDefault();
         

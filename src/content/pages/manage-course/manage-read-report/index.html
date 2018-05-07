@@ -3,26 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <title>T</title>
+        
+        <script src="../../../libs/kindeditor/kindeditor-all.js"></script>
+        <script src="../../../libs/kindeditor/lang/zh-CN.js"></script>
         <script src="../../../libs/require/2.1.18/require.js"></script>
     </head>
     <body>
         <div class="manage-all-course">
+            <div class="header">
+                <span>实验：</span>
+                <span class="course-name"></span>
+            </div>
             <div class="btn-ctn">
-                <button class="btn-operate" id="btn-edit">编辑</button>
-                <button class="btn-operate" id="btn-del">删除</button>
-                <button class="btn-operate" id="btn-report">查看学生报告</button>
+                <button class="btn-operate" id="btn-check">查看实验报告</button>
+                <button class="btn-operate" id="btn-edit">修改报告评语</button>
             </div>
             <table class="course-list">
                 <thead>
                     <tr>
                         <th><input id="select-all" type="checkbox"></th>
                         <th>实验ID</th>
-                        <th>实验名称</th>
-                        <th>实验老师ID</th>
-                        <th>实验老师名称</th>
-                        <th>实验类目</th>
-                        <th title="1正常，2待上线，3删除">实验状态</th>
-                        <th title="1代表允许，2代表不允许">是否允许访客访问</th>
+                        <th>学生名称</th>
                     </tr>
                 </thead>
                 <tbody id="course-list"></tbody>
@@ -42,6 +43,25 @@
                 <span class="btn-page" id="btn-page-refresh">刷新</span>
             </div>
         </div>
+
+        
+        <div class="preshow-box hide">
+            <div id="preshow">
+
+            </div>
+            <div class="review"></div>
+        </div>
+        <div class="barrier hide">
+            <div class="textarea-box">
+                <textarea
+                    id="editor_id"
+                    name="content"
+                    style="width:100%;height:400px;">
+                   
+                </textarea>
+            </div>
+            <button class="btn-operate" id="btn-save-review">保存</button>
+        </div>
         <div class="toast-ctn">
             <p class="toast-txt"></p>
         </div>
@@ -59,6 +79,19 @@
         <script>
             require(['./index'], function(script) {
                 script.init();
+            });
+            var editorReady = false;
+            KindEditor.ready(function(K) {
+                window.editor = K.create('#editor_id', {
+                    basePath: '/sp/libs/kindeditor/',
+                    //指定上传文件参数名称
+                    filePostName  : "uploadFile",
+                    //指定上传文件请求的url。
+                    uploadJson : '/pic/upload',
+                    //上传类型，分别为image、flash、media、file
+                    dir : "image"
+                });
+                editorReady = true;
             });
         </script>
     </body>

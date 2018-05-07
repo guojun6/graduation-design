@@ -63,7 +63,7 @@ var index = {
         });
     },
     getUerInfo: function() {
-        $.ajax(URLBase.localURLBase + '/userController/getUserInfo'/* + '?l=1'*/, {
+        $.ajax(URLBase.localURLBase + '/userController/getUserInfo' + '?l=1', {
             xhrFields: {
                 withCredentials: true
             },

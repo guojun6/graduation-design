@@ -133,6 +133,9 @@ function initCourse() {
 </script>
 
 <style lang="scss" scoped>
+a {
+    color: inherit;
+}
 .course {
     box-sizing: border-box;
     position: absolute;
@@ -140,7 +143,7 @@ function initCourse() {
     left: 0;
     width: 100%;
     padding: 20px;
-    height: 100%;
+    // height: 100%;
     background: #232323;
 }
 .header {
@@ -155,8 +158,8 @@ function initCourse() {
     }
 }
 .canvas-ctn {
-    display: inline-block;
-    width: 70%;
+    // display: inline-block;
+    // width: 70%;
 }
 .control {
     border: 1px solid #666;
@@ -168,10 +171,11 @@ function initCourse() {
     }
 }
 .chat-ctn {
-    float: right;
-    display: inline-block;
-    width: 28%;
+    // float: right;
+    // display: inline-block;
+    // width: 28%;
+    margin-top: 16px;
     height: 300px;
-    background: #ccc;
+    background: #fff;
 }
 </style>

@@ -4,6 +4,9 @@
 html, body {
     height: 100%;
 }
+body, .manage-power {
+    background: #f6f6f6;
+}
 .barrier {
     position: absolute;
     top: 0;
@@ -78,7 +81,8 @@ html, body {
     padding: 10px;
 }
 .manage-power {
-	width: 100%;
+	// width: 100%;
+    padding: 16px;
 	overflow: auto;
 }
 
@@ -121,8 +125,28 @@ html, body {
 }
 #preshow {
     margin: 20px auto;
+    padding: 10px;
     width: 80%;
     min-height: 400px;
     border-radius: 6px;
     background: #fff;
+}
+
+.title {
+    margin-bottom: 16px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.bottom-footer {
+    padding: 6px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+    a {
+        color: inherit;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
