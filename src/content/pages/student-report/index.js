@@ -6,9 +6,9 @@ var utils = require('utils');
  * @require '../../libs/kindeditor/themes/default/default.css'
  */
 var baseURL = {
-    'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
-    'devURLBase': 'http://localhost:8080',
+    'contentURL': '/graduation-design/dist/sp/pages/',
+    'localURLBase': 'http://192.168.43.36:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 };
 var data = {
@@ -19,6 +19,22 @@ var data = {
     report: '',
     review: ''
 };
+var editorReady = false;
+
+KindEditor.ready(function(K) {
+    window.editor = K.create('#editor_id', {
+        basePath: '/sp/libs/kindeditor/',
+        //指定上传文件参数名称
+        filePostName  : "uploadFile",
+        //指定上传文件请求的url。
+        uploadJson : '/reportController/pic/upload',
+        //上传类型，分别为image、flash、media、file
+        dir : "image"
+    });
+    
+    editorReady = true;
+    $('.full-screen').addClass('hide');
+});
 var index = {
     init: function() {
         var queryArr = location.search.slice(1).split('&'), 
@@ -35,6 +51,8 @@ var index = {
         this.listener();
         this.getReports();
         this.getCourseInfo();
+
+        this.setToast('加载中，请稍候')
     },
     listener: function() {
         $('#btn-save').on('click', function() {
@@ -61,6 +79,9 @@ var index = {
                 success: function(res) {
                     if (res.status === 200) {
                         index.setToast('保存成功');
+                        if (!data.reportId) {
+                            data.reportId = res.data;
+                        }
                     } else{
                         index.setToast('保存失败');
                     }
@@ -88,12 +109,23 @@ var index = {
                     return;
                 }
                 for (var i = 0; i < res.data.length; i++) {
-                    console.log(res.data[i].itemId, data.courseId)
                     if (res.data[i].itemId == data.courseId) {
                         data.report = res.data[i].desc;
                         data.reportId = res.data[i].id;
                         data.review = res.data[i].review;
-                        editor.html(data.report);
+
+
+                        if (editorReady) {
+                            editor.html(data.report);
+                        } else {
+                            var timer = setInterval(function() {
+                                if (editorReady) {
+                                    editor.html(data.report);
+                                    clearInterval(timer);
+                                }
+                            }, 1000);
+                        }
+                        
                         break;
                     }
                 }
@@ -123,7 +155,7 @@ var index = {
         return -1;
     },
     getCourseInfo: function() {
-        $.ajax('/itemController/listById', {
+        $.ajax(baseURL.localURLBase + '/itemController/listById', {
             xhrFields: {
                 withCredentials: true
             },

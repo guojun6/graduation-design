@@ -56,9 +56,12 @@
                     </div>
                     <div class="input-control">
                         <label class="input-name">权限功能IDs：</label>
-                        <input id="power-ids" type="text"/>
+                        <!--<input id="power-ids" type="text"/>-->
+                        <!--<textarea id="power-ids"></textarea>-->
+                        <select multiple id="power-ids"></select>
                         <span class="input-tip">
-                            <span style="color:#f00">*</span>以-为连接符填写功能权限ID，例:111-222-333
+                            <span><span style="color: red">*</span>按住ctrl进行多选</span>
+                            <button id="more-power">更多权限</button>
                         </span>
                     </div>
                     <div class="input-control">

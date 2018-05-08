@@ -7,6 +7,36 @@
     </head>
     <body>
         <div class="manage-all-course">
+            <div class="barrier hide">
+                <div id="dialog-edit">
+                    <div class="dialog-header">
+                        <span id="dialog-tittle"></span>
+                        <span class="btn-normal-close"></span>
+                    </div>
+
+                    <div class="preshow-box">
+                        <div id="preshow">
+
+                        </div>
+                    </div>
+
+                    <div class="control-box">
+                        <div class="input-control">
+                            <label class="input-name">实验状态：</label>
+                            <select id="power-status">
+                                <option value="1">正常</option>
+                                <option value="2">下架</option>
+                                <option value="4">待审核</option>
+                            </select>
+                        </div>
+                        <div class="input-control">
+                            <button id="save-power">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="btn-ctn">
                 <button class="btn-operate" id="btn-edit">编辑</button>
                 <button class="btn-operate" id="btn-del">删除</button>
@@ -18,8 +48,8 @@
                         <th><input id="select-all" type="checkbox"></th>
                         <th>实验ID</th>
                         <th>实验名称</th>
-                        <th>实验老师ID</th>
-                        <th>实验老师名称</th>
+                        <th>入口图片路径</th>
+                        <th>webgl文件路径</th>
                         <th>实验类目</th>
                         <th title="1正常，2待上线，3删除">实验状态</th>
                         <th title="1代表允许，2代表不允许">是否允许访客访问</th>
@@ -55,6 +85,8 @@
                 </div>
             </section>
         </article>
+
+        
         <!--SCRIPT_PLACEHOLDER-->
         <script>
             require(['./index'], function(script) {

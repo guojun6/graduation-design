@@ -4,9 +4,9 @@ var $ = require('jquery');
  * @require './index.scss'
  */
 var baseURL = {
-    'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
-    'devURLBase': 'http://localhost:8080',
+    'contentURL': '/graduation-design/dist/sp/pages/',
+    'localURLBase': 'http://192.168.43.36:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 };
 
@@ -17,12 +17,18 @@ var data = {
     selectCourseId: [],
     alertSignal: 'del',
     allPage: 0,
-    nowPage: 1
+    nowPage: 1,
+    userInfo: null,
+    classList: null,
+    readyToGetCourseList: 0, // 2即可
+    courseStatus: null
 };
 
 var index = {
     init: function() {
-        this.getTestList(1);
+        // this.getTestList(1);
+        this.getUerInfo();
+        this.getTestClassList();
         this.listener();
     },
     listener: function() {
@@ -124,15 +130,84 @@ var index = {
             index.openDialog();
         });
         // alert
-        $('.barrier').on('click', function() {
-            console.log(this, e)
+        $('.barrier').on('click', function(e) {
+            // console.log(this, e)
+            if (e.target === this) {
+                $(this).addClass('hide');
+            }
         });
         $('#alert .btn-ensure').on('click', index.clkEnsure);
         $('#alert .btn-cancel').on('click', index.clkCancel);
         $('#btn-report').on('click', index.readReport);
+        // 关闭dialog
+        $('.btn-normal-close').on('click', function() {
+            $(this).closest('.barrier').addClass('hide');
+        });
+        $('#save-power').on('click', index.saveStatus);
+    },
+    getUerInfo: function() {
+        $.ajax(baseURL.localURLBase + '/userController/getUserInfo'/* + '?l=1'*/, {
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function(res) {
+                if (res.status === 200) {
+                    data.userInfo = res.data;
+                    $.ajax(baseURL.localURLBase + '/roleController/getRoleById', {
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        data: {
+                            id: res.data.role
+                        },
+                        success: function(res) {
+                            if (++data.readyToGetCourseList === 2) {
+                                data.userInfo.roleName = res.data.name;
+                                index.getTestList(1);
+                            }
+                        }
+                    });
+                } else if (res.status === 300) {
+                    index.setToast('请登录')
+                }
+            }
+        });
+    },
+    // 获取实验类目
+    getTestClassList: function(cb) {
+        $.ajax(baseURL.localURLBase + '/itemCatController/list', {
+            data: {
+                page: 1,
+            },
+            success: function(res) {
+                if (res.status === 200) {
+                    cb && cb();
+                    if (++data.readyToGetCourseList === 2) {
+                        index.getTestList(1);
+                    }
+                    var classList = {};
+                    for (var i = 0; i < res.data.length; i++) {
+                        classList[res.data[i].id] = res.data[i].name;
+                    }
+                    data.classList = classList;
+                }
+            },
+            xhrFields: {
+                withCredentials: true
+            }
+        })
     },
     getTestList: function(page) {
-        $.ajax(baseURL.localURLBase + '/itemController/listByTeacher', {
+        var api;
+        if (data.userInfo.roleName === '老师') {
+            
+            api = '/itemController/listByTeacher';
+        } else {
+            $('#btn-report').addClass('hide');
+            $('#btn-edit').text('查看/审核');
+            api = '/itemController/list';
+        }
+        $.ajax(baseURL.localURLBase + api, {
             data: {
                 page: page,
                 // pageCount: 10
@@ -151,11 +226,11 @@ var index = {
                                 .append($('<td><input class="course-check" type="checkbox"></td>'))
                                 .append($('<td>' + res.data[i].id + '</td>'))
                                 .append($('<td>' + res.data[i].name + '</td>'))
-                                .append($('<td>' + res.data[i].teacherId + '</td>'))
-                                .append($('<td>' + res.data[i].teacherName + '</td>'))
-                                .append($('<td>' + res.data[i].cid + '</td>'))
+                                .append($('<td>' + res.data[i].imgUrl + '</td>'))
+                                .append($('<td>' + res.data[i].courseUrl + '</td>'))
+                                .append($('<td>' + data.classList[res.data[i].cid] + '</td>'))
                                 .append($('<td>' + 
-                                (res.data[i].status === 1 ? '正常' : (res.data[i].status === 2 ? '下降' : '删除')) + 
+                                (res.data[i].status === 1 ? '正常' : (res.data[i].status === 2 ? '未上线' : (res.data[i].status === 4 ? '待审核' : '删除'))) + 
                                 '</td>'))
                                 .append($('<td>' + 
                                 (res.data[i].visitorAllow == 1 ? '允许' : '不允许') +
@@ -219,19 +294,67 @@ var index = {
     closeAlert: function() {
         $('#alert').closest('.barrier').addClass('hide');
     },
+    findIndexByKey: function(array, key, value) {
+        for (var i = 0; i < array.length; i++) {
+            if (array[i][key] === value) {
+                return i;
+            }
+        }
+        return -1;
+    },
     openDialog: function() {
         if (data.selectCourseId.length !== 1) {
             index.setToast('请选择一个实验进行编辑');
             return;
         }
-        location.href = '/sp/pages/manage-course/manage-edit-course?id=' + data.selectCourseId[0];
+        if (data.userInfo.roleName === '老师') {
+            location.href = '/graduation-design/dist/sp/pages/manage-course/manage-edit-course/index.html?id=' + data.selectCourseId[0];
+        } else {
+            // console.log(data.courseList[index.findIndexByKey(data.courseList, 'id', data.selectCourseId[0])].status)
+            $('#power-status').val(data.courseList[index.findIndexByKey(data.courseList, 'id', data.selectCourseId[0])].status);
+            $.ajax(baseURL.localURLBase + '/itemDescController/listByItemId', {
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: {
+                    id: data.selectCourseId[0]
+                },
+                success: function(res) {
+                    if (res.status === 200) {
+                        $('#preshow').html(res.data.itemDesc)
+                    }
+                }
+            })
+            $('#dialog-edit').closest('.barrier').removeClass('hide');
+        }
+        
     },
     readReport: function() {
         if (data.selectCourseId.length !== 1) {
             index.setToast('请选择一个权限功能进行编辑');
             return;
         }
-        location.href = '/sp/pages/manage-course/manage-read-report?courseId=' + data.selectCourseId[0];
+        location.href = '/graduation-design/dist/sp/pages/manage-course/manage-read-report/index.html?courseId=' + data.selectCourseId[0];
+    },
+    saveStatus: function() {
+        var course = data.courseList[index.findIndexByKey(data.courseList, 'id', data.selectCourseId[0])];
+        delete course.created;
+        delete course.updated;
+        course.status = $('#power-status').val();
+        $.ajax(baseURL.localURLBase + '/itemController/updateItem', {
+            xhrFields: {
+                withCredentials: true
+            },
+            data: course,
+            success: function(res) {
+                if (res.status === 200) {
+                    $('#dialog-edit').closest('.barrier').addClass('hide');
+                    location.reload();
+                } else {
+                    index.setToast('保存失败，请重试');
+                }
+            }
+        })
     }
     
 };

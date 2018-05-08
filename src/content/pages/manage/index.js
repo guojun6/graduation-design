@@ -2,9 +2,9 @@ var $ = require('jquery');
 var utils = require('utils');
 
 var URLBase = {
-    'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
-    'devURLBase': 'http://localhost:8080',
+    'contentURL': '/graduation-design/dist/sp/pages/',
+    'localURLBase': 'http://192.168.43.36:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 }
 /**
@@ -63,7 +63,7 @@ var index = {
         });
     },
     getUerInfo: function() {
-        $.ajax(URLBase.localURLBase + '/userController/getUserInfo' + '?l=1', {
+        $.ajax(URLBase.localURLBase + '/userController/getUserInfo'/* + '?l=1'*/, {
             xhrFields: {
                 withCredentials: true
             },
@@ -74,7 +74,7 @@ var index = {
                     $('.user-info').removeClass('hide').find('img').attr('src', res.data.profilehead);
                     $('#user-name').text(res.data.username);
                 } else if (res.status === 300) {
-                    location.href = '/sp/pages/account';
+                    location.href = '/graduation-design/dist/sp/pages/account/index.html?url=/graduation-design/dist/sp/pages/manage/index.html';
                 }
             }
         });
@@ -108,11 +108,14 @@ var index = {
             .addClass('hide');
         },
         logout: function(e) {
-            $.ajax('/loginController/logout', {
+            $.ajax(URLBase.localURLBase + '/loginController/logout', {
                 success: function(res) {
                     if (res.status === 200) {
-                        location.href = '/sp/pages/account';
+                        location.href = '/graduation-design/dist/sp/pages/account/index.html?url=/graduation-design/dist/sp/pages/manage/index.html';
                     }
+                },
+                xhrFields: {
+                    withCredentials: true
                 }
             });
         }

@@ -5,9 +5,9 @@ var utils = require('utils');
  * @require './index.scss'
  */
 var baseURL = {
-    'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
-    'devURLBase': 'http://localhost:8080',
+    'contentURL': '/graduation-design/dist/sp/pages/',
+    'localURLBase': 'http://192.168.43.36:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 };
 var data = {
@@ -17,7 +17,8 @@ var data = {
     powerList: [],
     alertSignal: 'del',
     allPage: 0,
-    nowPage: 1
+    nowPage: 1,
+    roleList: {}
 };
 var index = {
     init: function() {
@@ -116,14 +117,15 @@ var index = {
         });
         // 保存添加或编辑
         $('#save-power').on('click', function(e) {
+            console.log('sad')
             var ajaxData = {
-                name: $('#power-role').val(),
+                roleIds: $('#power-role').val(),
             },
-            url = baseURL.localURLBase + '/roleController/' + data.openDialogType;
+            url = baseURL.localURLBase + '/userController/editRole';
             if (data.openDialogType === 'edit') {
-                ajaxData.id = data.selectPowerListId[0];
+                ajaxData.userId = data.selectPowerListId[0];
             }
-            
+            console.log(url)
             $.ajax(url, {
                 data: ajaxData,
                 xhrFields: {
@@ -133,6 +135,9 @@ var index = {
                     index.setToast('成功！');
                     $('#dialog-edit').closest('.barrier').addClass('hide');
                     location.reload();
+                },
+                error: function(err,a,b) {
+                    console.log(err,a,b)
                 }
             });
         });
@@ -149,18 +154,37 @@ var index = {
     },
     getRoleList: function(page) {
         var roleList = {};
-        (function() {
-            $.ajax('/roleController/listAll', {
+        var page = 1;
+        (function getRole(p) {
+            $.ajax(baseURL.localURLBase + '/roleController/listAll', {
+                data: {
+                    page: p
+                },
                 success: function(res) {
-                    getList();
                     if (res.status === 200) {
                         for (var i = 0, l = res.data.length; i < l; i++) {
                             roleList[res.data[i].id] = res.data[i].name;
                         }
+                        if (res.pageCount <= p) {
+                            data.roleList = roleList;
+                            for (var key in data.roleList) {
+                                $('#power-role').append(
+                                    $('<option value="' + key + '">' + data.roleList[key] + '</option>')
+                                )
+                            }
+                            
+                            console.log(data.roleList)
+                            getList();
+                        } else {
+                            getRole(++p);
+                        }
                     }
+                },
+                xhrFields: {
+                    withCredentials: true
                 }
             });
-        })();
+        })(page);
         function getList() {
             $.ajax(baseURL.localURLBase + '/userController/listAll', {
                 data: {
@@ -228,7 +252,7 @@ var index = {
         return -1;
     },
     // alert
-    clkEnsure(e) {
+    clkEnsure: function(e) {
         e.stopPropagation();
         e.preventDefault();
 
@@ -256,7 +280,7 @@ var index = {
             })
         }
     },
-    clkCancel(e) {
+    clkCancel: function(e) {
         e.stopPropagation();
         e.preventDefault();
         
@@ -264,10 +288,9 @@ var index = {
 
         index.closeAlert();
     },
-    closeAlert() {
+    closeAlert: function() {
         $('#alert').closest('.barrier').addClass('hide');
-    },
-    
+    }
 };
 
 module.exports = index;

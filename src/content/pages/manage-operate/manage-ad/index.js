@@ -6,9 +6,9 @@ require('fetch');
  * @require './index.scss'
  */
 var baseURL = {
-    'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
-    'devURLBase': 'http://localhost:8080',
+    'contentURL': '/graduation-design/dist/sp/pages/',
+    'localURLBase': 'http://192.168.43.36:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 };
 var data = {
@@ -145,6 +145,7 @@ var index = {
                 index.setToast('图片上传中，请稍后再保存');
                 return;
             }
+            console.log(data.filePath)
             var ajaxData = {
                 name: $('#power-name').val(),
                 desc: $('#power-desc').val(),
@@ -223,15 +224,16 @@ var index = {
                                 .append($('<td>' + res.data[i].id + '</td>'))
                                 .append($('<td>' + res.data[i].name + '</td>'))
                                 .append($('<td>' + res.data[i].type + '</td>'))
-                                .append($('<td>' + res.data[i].desc + '</td>'))
+                                .append($('<td>' + res.data[i].description + '</td>'))
                                 .append($('<td>' + res.data[i].path + '</td>'))
                                 .append($('<td>' + res.data[i].url + '</td>'))
                         )
                     }
                 }
-
-                data.allPage = res.pageCount;
-                $('#page-count').text(res.pageCount);
+                if (data.allPage < res.pageCount) {
+                    data.allPage = res.pageCount;
+                    $('#page-count').text(res.pageCount);
+                }
             }
         });
     },
@@ -253,7 +255,7 @@ var index = {
             data.oldFilePath = data.filePath;
 
             $('#power-name').val(data.powerList[powerObjIndex]['name']);
-            $('#power-desc').val(data.powerList[powerObjIndex]['desc']);
+            $('#power-desc').val(data.powerList[powerObjIndex]['description']);
             $('#power-type').val(data.powerList[powerObjIndex]['type']);
             // $('#power-path').val(data.powerList[powerObjIndex]['path']);
             $('#power-path-show').text(data.filePath);
@@ -341,9 +343,11 @@ var index = {
 		fetch(baseURL.localURLBase + '/fileController/upload', {
             body: formData,
             method: 'POST',
-			headers: {
-				'Content-Type': 'multipart/form-data'
-			}
+            credentials: 'include',
+            mode: 'cors'
+			// headers: {
+			// 	'Content-Type': 'multipart/form-data'
+			// }
 		}).then(function(RES) {
             return RES.json();
         }).then(function(res) {
@@ -352,7 +356,7 @@ var index = {
 				index.setToast(res.msg);
 			} else {
 				// this.getAvatar();
-                data.filePath = res.data.path;
+                data.filePath = res.data;
 			}
 		}).catch(function(err) {
             index.setToast(err);

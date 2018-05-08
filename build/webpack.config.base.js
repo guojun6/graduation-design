@@ -29,9 +29,9 @@ module.exports = {
         ExtractVueStyle,
         ExtractStyle,
         new webpack.DefinePlugin({
-            'contentURL': JSON.stringify('/sp/pages/'),
-            'localURLBase': JSON.stringify('http://localhost:8080'),
-            'devURLBase': JSON.stringify('http://localhost:8080'),
+            'contentURL': JSON.stringify('/graduation-design/dist/sp/pages/'),
+            'localURLBase': JSON.stringify('http://192.168.43.36:8080'),
+            'devURLBase': JSON.stringify('http://192.168.43.36:8080'),
             'prodURLBase': JSON.stringify(''),
             'expURL': JSON.stringify('')
         })

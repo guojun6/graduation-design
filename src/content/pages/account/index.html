@@ -17,9 +17,6 @@
                 <li>
                     <a href="/#/home">首页</a>
                 </li>
-                <li>
-                    <a to="/#/home">测试</a>
-                </li>
             </ul>
         </section>
         <div class="container-o">
@@ -36,7 +33,7 @@
                 </header>
                 <div class="container">
                     <div class="error-tips hide"></div>
-                    <div class="form-ctn log-form-ctn">
+                    <form class="form-ctn log-form-ctn">
                         <div class="input-control">
                             <label class="input-name">邮箱：</label>
                             <input id="log-email" type="text"/>
@@ -46,10 +43,10 @@
                             <input id="log-password" type="password"/>
                         </div>
                         <div class="input-control">
-                            <button id="btn-login">登录</button>
+                            <button id="btn-login" type="submit">登录</button>
                         </div>
-                    </div>
-                    <div class="form-ctn reg-form-ctn hide">
+                    </form>
+                    <form class="form-ctn reg-form-ctn hide">
                         <div class="reg-tips">
                             <span>注：带</span>
                             <span class="red">*</span>
@@ -75,9 +72,9 @@
                             <input id="reg-phone" type="text"/>
                         </div>
                         <div class="input-control">
-                            <button id="btn-register">注册</button>
+                            <button id="btn-register" type="submit">注册</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 
             </div>

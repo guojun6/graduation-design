@@ -1,33 +1,46 @@
 var $ = require('jquery');
 var URLBase = {
-    'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
-    'devURLBase': 'http://localhost:8080',
+    'contentURL': '/graduation-design/dist/sp/pages/',
+    'localURLBase': 'http://192.168.43.36:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 }
 /**
  * @require './index.scss'
  */
 var data = {
-    logOrReg: 'log'
+    logOrReg: 'log',
+    linkURL: null
 };
 var emailRep = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
 
 var index = {
     init: function() {
         this.listener();
-        console.log(document.cookie.JSESSIONID, document.cookie.rememberMe, document.cookie.status)
+        var queryArr = location.search.slice(1).split('&'), 
+            temp;
+        for (var i = 0; i < queryArr.length; i++) {
+            temp = queryArr[i].split('=');
+            if (temp[0] === 'url') {
+                data.linkURL = decodeURIComponent(temp[1]);
+                if (data.linkURL[0] !== '/') {
+                    data.linkURL = '/#/' + data.linkURL;
+                }
+                console.log(data.linkURL)
+            }
+        }
     },
     listener: function() {
         $('.tab:first-child').on('click', this.tab1Clk);
         $('.tab:last-child').on('click', this.tab2Clk);
         $('#btn-login').on('click', this.login);
         $('#btn-register').on('click', this.register);
+        
     },
     // 切换登录
     tab1Clk: function(e) {
         data.logOrReg = 'log';
-
+        $('.error-tips').addClass('hide');
         $('.tab:last-child').addClass('transparent');
         index.toggleFormCtn('log', 'reg');
         index.deleteTransparent(this);
@@ -35,7 +48,7 @@ var index = {
     // 切换注册
     tab2Clk: function(e) {
         data.logOrReg = 'reg';
-
+        $('.error-tips').addClass('hide');
         $('.tab:first-child').addClass('transparent');
         index.toggleFormCtn('reg', 'log');
         index.deleteTransparent(this);
@@ -49,6 +62,9 @@ var index = {
     },
     // 登录
     login: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
         var email = $('#log-email').val(),
             password = $('#log-password').val();
 
@@ -74,7 +90,12 @@ var index = {
             success: function(res) {
                 console.log(res)
                 if (res.status === 200) {
-                    // location.href = '/#/home';
+                    if (data.linkURL) {
+                        location.href = data.linkURL;
+                    } else {
+                        location.href = '/';
+                    }
+                    
                     // $.ajax(apiBase + '/loginController/logout', {
                     //     xhrFields: {
                     //         withCredentials: true
@@ -92,6 +113,8 @@ var index = {
     },
     // 注册
     register: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         var email = $('#reg-email').val(),
             password = $('#reg-password').val(),
             username = $('#reg-username').val(),
@@ -128,6 +151,10 @@ var index = {
             type: 'POST',
             data: ajaxData,
             success: function(data) {
+                if (data.status !== 200) {
+                    index.setToast(data.msg);
+                    return;
+                }
                 $.ajax(URLBase.localURLBase + '/loginController/login', {
                     type: 'POST',
                     data: {
@@ -136,7 +163,11 @@ var index = {
                     },
                     success: function(res) {
                         if (res.status === 200) {
-                            // location.href = '/#/home';
+                            if (data.linkURL) {
+                                location.href = data.linkURL;
+                            } else {
+                                location.href = '/';
+                            }
                         }
                     },
                     error: function(err) {
@@ -151,6 +182,16 @@ var index = {
                 console.log(err);
             }
         });
+    },
+    setToast: function(txt) {
+        $('.toast-txt').text(txt);
+        $('.toast-ctn').addClass('show');
+        if (data.timer) {
+            clearTimeout(data.timer);
+        }
+        data.timer = setTimeout(function() {
+            $('.toast-ctn').removeClass('show');
+        }, 2000);
     }
 };
 

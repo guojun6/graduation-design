@@ -25,15 +25,20 @@
                 <div v-if="report.isShow">
                     <el-button>
                         <a
-                            :href="'/sp/pages/student-report?courseId=' + report.itemId + '&studentId=' + userInfo.id"
+                            :href="'/graduation-design/dist/sp/pages/student-report/index.html?courseId=' + report.itemId + '&studentId=' + userInfo.id"
                             target="_blank">编辑</a>
                     </el-button>
                 </div>
                 <transition name="fade">
-                    <div
-                        class="content"
-                        v-if="report.isShow"
-                        v-html="report.desc"></div>
+                    <div v-if="report.isShow">
+                        <div
+                            class="content"
+                            v-html="report.desc"></div>
+                        <div>评语：</div>
+                        <div
+                            class="review"
+                            v-html="report.review ? report.review : '老师还未给您评语哦~'"></div>
+                    </div>
                 </transition>
             </li>
         </ul>
@@ -65,7 +70,10 @@ export default {
         getReportList(page) {
             fetch(localURLBase + '/reportController/listByStudent' + object2Query({
                 page
-            })).then((RES) => {
+            }), {
+                mode: 'cors',
+                credentials: 'include'
+            }).then((RES) => {
                 return RES.json();
             }).then((res) => {
                 if (res.status === 200) {
@@ -75,7 +83,10 @@ export default {
 
                         fetch(localURLBase + '/itemController/listById' + object2Query({
                             id: this.reportList[i].itemId
-                        })).then((RES) => {
+                        }), {
+                            mode: 'cors',
+                            credentials: 'include'
+                        }).then((RES) => {
                             return RES.json();
                         }).then((res) => {
                             if (res.status === 200) {
@@ -135,6 +146,14 @@ export default {
     min-height: 200px;
     border-radius: 6px;
     background: #FFE4B5;
+    font-size: 12px;
+}
+.review {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    background: #FFE4B5;
+    font-size: 12px;
 }
 .fade-enter-active {
     transition: all .5s;

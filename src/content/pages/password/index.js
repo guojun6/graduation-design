@@ -1,8 +1,8 @@
 var $ = require('jquery');
 var baseURL = {
-    'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
-    'devURLBase': 'http://localhost:8080',
+    'contentURL': '/graduation-design/dist/sp/pages/',
+    'localURLBase': 'http://192.168.43.36:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 };
 /**
@@ -45,7 +45,7 @@ var index = {
             },
             success: function(res) {
                 if (res.status === 200) {
-                    location.href = '/sp/pages/account';
+                    location.href = '/graduation-design/dist/sp/pages/account/index.html';
                 } else {
                     alert('更改失败，code:' + res.status);
                 }

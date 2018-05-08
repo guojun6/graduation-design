@@ -1,12 +1,13 @@
 @import "../../../assets/style/base";
 @import "../../assets/common";
-
+@import "../../../assets/style/index";
 html, body {
     height: 100%;
 }
 body, .manage-power {
     background: #f6f6f6;
 }
+
 .barrier {
     position: absolute;
     top: 0;
@@ -81,7 +82,10 @@ body, .manage-power {
     padding: 10px;
 }
 .manage-power {
+    box-sizing: border-box;
+    position: relative;
 	// width: 100%;
+    min-height: 100%;
     padding: 16px;
 	overflow: auto;
 }
@@ -130,6 +134,7 @@ body, .manage-power {
     min-height: 400px;
     border-radius: 6px;
     background: #fff;
+    font-size: 12px;
 }
 
 .title {

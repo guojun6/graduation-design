@@ -9,7 +9,7 @@
                 v-if="course">{{course.name}}</div>
             <el-button >
                 <a
-                    :href="'/sp/pages/student-report?studentId='+ this.userInfo.id + '&courseId=' + courseId"
+                    :href="'/graduation-design/dist/sp/pages/student-report/index.html?studentId='+ this.userInfo.id + '&courseId=' + courseId"
                     target="_blank">
                     写报告
                 </a>
@@ -83,7 +83,7 @@ export default {
                     txt: '该课程需要登录才能访问，5秒后自动跳转登录页面'
                 });
                 setTimeout(function() {
-                    location.href = '/sp/pages/account';
+                    location.href = '/graduation-design/dist/sp/pages/account/index.html';
                 }, 5000);
             } 
             

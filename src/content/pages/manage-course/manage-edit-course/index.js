@@ -10,9 +10,9 @@ var arrangeLevelList = require('utils').arrangeLevelList;
  */
 
 var baseURL = {
-    'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
-    'devURLBase': 'http://localhost:8080',
+    'contentURL': '/graduation-design/dist/sp/pages/',
+    'localURLBase': 'http://192.168.43.36:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 };
 var data = {
@@ -21,9 +21,23 @@ var data = {
     timer: null,
     selectedPid: null,
     uploading: false,
-    filePath: ''
+    filePath: '',
+    courseStatus: null
 };
-
+var editorReady = false;
+KindEditor.ready(function(K) {
+    window.editor = K.create('#editor_id', {
+        basePath: '/sp/libs/kindeditor/',
+        //指定上传文件参数名称
+        filePostName  : "uploadFile",
+        //指定上传文件请求的url。
+        uploadJson : '/pic/upload',
+        //上传类型，分别为image、flash、media、file
+        dir : "image"
+    });
+    editorReady = true;
+    $('.full-screen').addClass('hide');
+});
 var index = {
     init: function() {
         data.courseId = index.formatQuery(location.search).id;
@@ -31,6 +45,7 @@ var index = {
         this.listener();
         this.getTestClassList(index.getDocContent);
         
+        this.setToast('加载中，请稍后');
     },
     listener: function() {
         // 保存编辑
@@ -39,7 +54,7 @@ var index = {
             console.log(data.filePath)
             var ajaxData = {
                 name: $('#test-name').val(),
-                status: Number($('#test-status').val()),
+                status: data.courseStatus, // Number($('#test-status').val()),
                 cid: Number($('#class-type2').val()),
                 visitorAllow: Number($('#allow-visitor').val()),
                 desc: editor.html(),
@@ -192,7 +207,8 @@ var index = {
                     $('#class-type1').val(pcid);
                     $('#class-type2').val(cid);
                     $('#test-name').val(res.data.name);
-                    $('#test-status').val(res.data.status);
+                    // $('#test-status').val(res.data.status);
+                    data.courseStatus = res.data.status;
                     // $('#test-teacher').val(res.data.teacherName);
                     $('#allow-visitor').val(res.data.visitorAllow);
                     $('#power-path-show').text(res.data.imgUrl);

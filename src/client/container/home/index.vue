@@ -113,9 +113,13 @@ export default {
 
         },
         getBanner() {
-            fetch('/imageController/getImagesInfoByType' + object2Query({
-                type: 1
-            })).then((RES) => {
+            fetch(localURLBase + '/imageController/getImagesInfoByType' + object2Query({
+                type: 1,
+                page: 1
+            }), {
+                mode: 'cors',
+                credentials: 'include'
+            }).then((RES) => {
                 return RES.json();
             }).then((res) => {
                 if (res.status === 200) this.bannerInfo = res.data;

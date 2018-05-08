@@ -65,7 +65,7 @@ export default {
     },
     created() {
         if (!this.isLogin) {
-            location.href = '/sp/pages/account';
+            location.href = '/graduation-design/dist/sp/pages/account/index.html';
         }
         this.avatarPath = this.userInfo.profilehead;
         this.username = this.userInfo.username;
@@ -100,9 +100,11 @@ export default {
             fetch(localURLBase + '/fileController/upload', {
                 body: formData,
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'multiple/form-data'
-                }
+                // headers: {
+                //     'Content-Type': 'multiple/form-data'
+                // },
+                mode: 'mors',
+                credentials: 'include'
             }).then((RES) => {
                 return RES.json();
             }).then((res) => {
@@ -110,7 +112,7 @@ export default {
                     this.setToast(res.msg);
                 } else {
                     // this.getAvatar();
-                    this.avatarPath = res.data.path;
+                    this.avatarPath = res.data;
                 }
             }).catch((err) => {
                 this.setToast(err);
@@ -146,6 +148,9 @@ export default {
                         showTime: Date.now(),
                         txt: '保存失败'
                     });
+                } else {
+                    this.setToast('保存成功');
+
                 }
             })
         },
@@ -167,6 +172,7 @@ export default {
     margin: 20px auto;
     border-radius: 25px;
     overflow: hidden;
+    border: 1px solid rgba(100,100,100,0.3);
     cursor: pointer;
     &:hover {
         box-shadow: 0 0 5px #ccc;

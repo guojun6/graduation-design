@@ -5,9 +5,9 @@ var utils = require('utils');
  * @require './index.scss'
  */
 var baseURL = {
-    'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
-    'devURLBase': 'http://localhost:8080',
+    'contentURL': '/graduation-design/dist/sp/pages/',
+    'localURLBase': 'http://192.168.43.36:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 };
 var data = {
@@ -17,12 +17,14 @@ var data = {
     powerList: [],
     alertSignal: 'del',
     allPage: 0,
-    nowPage: 1
+    nowPage: 1,
+    nowPowerPage: 1
 };
 var index = {
     init: function() {
         this.listener();
         this.getRoleList(1);
+        this.getPowerList(data.nowPowerPage);
     },
     listener: function() {
         // 页码
@@ -124,7 +126,7 @@ var index = {
             var ajaxData = {
                 name: $('#power-name').val(),
                 description: $('#power-description').val(),
-                functionIds: $('#power-ids').val()
+                functionIds: $('#power-ids').val().join('-')
             },
             url = baseURL.localURLBase + '/roleController/' + data.openDialogType;
             if (data.openDialogType === 'edit') {
@@ -153,7 +155,7 @@ var index = {
                 .closest('.barrier')
                 .removeClass('hide')
                 .find('.body')
-                .text('编号为' + data.selectPowerListId[0] + '的权限功能吗？');
+                .text('编号为' + data.selectPowerListId.join(', ') + '的权限功能吗？');
         });
         // alert
         $('.barrier').on('click', function() {
@@ -161,6 +163,9 @@ var index = {
         });
         $('#alert .btn-ensure').on('click', index.clkEnsure);
         $('#alert .btn-cancel').on('click', index.clkCancel);
+        $('#more-power').on('click', function() {
+            index.getPowerList(data.nowPowerPage);
+        });
     },
     setNowPage: function(num) {
         data.nowPage = num;
@@ -232,7 +237,7 @@ var index = {
             var powerObjIndex = index.findIndexByKey(data.powerList, 'id', data.selectPowerListId[0]);
             $('#power-name').val(data.powerList[powerObjIndex]['name']);
             $('#power-description').val(data.powerList[powerObjIndex]['description']);
-            $('#power-ids').val(data.powerList[powerObjIndex]['functionIds']);
+            $('#power-ids').val(data.powerList[powerObjIndex]['functionIds'] ? data.powerList[powerObjIndex]['functionIds'].split('-') : '');
         }
         $('#dialog-edit').closest('.barrier').removeClass('hide');
     },
@@ -256,7 +261,7 @@ var index = {
         return -1;
     },
     // alert
-    clkEnsure(e) {
+    clkEnsure: function(e) {
         e.stopPropagation();
         e.preventDefault();
 
@@ -284,7 +289,7 @@ var index = {
             })
         }
     },
-    clkCancel(e) {
+    clkCancel: function(e) {
         e.stopPropagation();
         e.preventDefault();
         
@@ -292,10 +297,38 @@ var index = {
 
         index.closeAlert();
     },
-    closeAlert() {
+    closeAlert: function() {
         $('#alert').closest('.barrier').addClass('hide');
     },
-    
+    getPowerList: function(page) {
+        $('#more-power').addClass('hide');
+        $.ajax(baseURL.localURLBase + '/functionController/listAll', {
+            data: {
+                page: page
+            },
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function(res) {
+                if (res.status !== 200) {
+                    index.setToast('获取权限列表失败，请刷新');
+                    return;
+                }
+                data.nowPowerPage++;
+                if (data.nowPowerPage > res.pageCount) {
+                    $('#more-power').addClass('hide');
+                    index.setToast('无更多的权限了');
+                } else {
+                    $('#more-power').removeClass('hide');
+                }
+                for (var i = 0; i < res.data.length; i++) {
+                    $('#power-ids').append(
+                        $('<option value="' + res.data[i].id + '">' + res.data[i].name + '</option>')
+                    );
+                }                
+            }
+        })
+    },
 };
 
 module.exports = index;

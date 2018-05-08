@@ -9,6 +9,7 @@
     </head>
     <body>
         <div class="manage-power">
+            <div class="full-screen"></div>
             <div class="title"></div>
             <header class="btn-ctn">
                 <button class="btn-operate" id="btn-save">保存</button>
@@ -45,21 +46,7 @@
             require(['./index'], function(script) {
                 script.init();
             });
-            var editorReady = false;
-
-            KindEditor.ready(function(K) {
-                window.editor = K.create('#editor_id', {
-                    basePath: '/sp/libs/kindeditor/',
-                    //指定上传文件参数名称
-                    filePostName  : "uploadFile",
-                    //指定上传文件请求的url。
-                    uploadJson : '/reportController/pic/upload',
-                    //上传类型，分别为image、flash、media、file
-                    dir : "image"
-                });
-                console.log('dsa')
-                editorReady = true;
-            });
+            
         </script>
     </body>
 </html>

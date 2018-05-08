@@ -8,7 +8,8 @@
         <script src="../../../libs/require/2.1.18/require.js"></script>
     </head>
     <body>
-        <div>
+        <div class="edit">
+            <div class="full-screen"></div>
             <div class="input-control">
                 <label class="input-name">类目：</label>
                 <select class="hide" id="class-type1"></select>
@@ -18,13 +19,13 @@
                 <label class="input-name">实验名称：</label>
                 <input id="test-name" type="text"/>
             </div>
-            <div class="input-control">
+            <!--<div class="input-control">
                 <label class="input-name">实验状态：</label>
                 <select id="test-status">
                     <option value="1">正常</option>
                     <option value="2">暂不上线</option>
                 </select>
-            </div>
+            </div>-->
             <!--
                 <div class="input-control">
                     <label class="input-name">老师名称：</label>
@@ -65,22 +66,11 @@
         </div>
         <!--SCRIPT_PLACEHOLDER-->
         <script>
-            var editorReady = false;
+            
             require(['./index'], function(script) {
                 script.init();
             });
-            KindEditor.ready(function(K) {
-                window.editor = K.create('#editor_id', {
-                    basePath: '/sp/libs/kindeditor/',
-                    //指定上传文件参数名称
-                    filePostName  : "uploadFile",
-                    //指定上传文件请求的url。
-                    uploadJson : '/pic/upload',
-                    //上传类型，分别为image、flash、media、file
-                    dir : "image"
-                });
-                editorReady = true;
-            });
+            
             
         </script>
     </body>

@@ -137,7 +137,8 @@ html, body {
 	}
 }
 .manage-power {
-	width: 100%;
+	padding: 10px 16px 20px;
+	// width: 100%;
 	overflow: auto;
 }
 .dialog-header {
@@ -198,6 +199,9 @@ html, body {
 			&:hover {
 				background: #92b4f7;
 			}
+		}
+		td {
+			padding: 6px;
 		}
 	}
 	.power-check {

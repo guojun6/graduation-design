@@ -1,7 +1,13 @@
 @import "../../../../assets/style/base";
+@import "../../../../assets/style/index";
+
 .hide {
     display: none;
 }
+.edit {
+    position: relative;
+}
+
 .toast-ctn {
 	position: absolute;
 	left: 0;

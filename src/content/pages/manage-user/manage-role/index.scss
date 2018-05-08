@@ -104,12 +104,16 @@ html, body {
 		flex: 0 0 180px;
     }
     > select {
-        width: 100px;
+        width: 160px;
         padding: 4px;
         border: 1px solid #aaa;
         border-radius: 6px;
+		flex:  0 0 160px;
+		option {
+			padding: 4px;
+		}
     }
-    > button {
+    button {
         border: 1px solid #FFA500;
         padding: 6px 0;
         width: 100px;
@@ -129,9 +133,19 @@ html, body {
 		font-size: 12px;
 		color: #999;
 	} 
+	textarea {
+		resize: none;
+		border: 1px solid #aaa;
+        width: 180px;
+		height: 100px;
+        padding: 4px;
+        border-radius: 6px;
+		flex: 0 0 180px;
+	}
 }
 .manage-power {
-	width: 100%;
+	padding: 10px 16px 20px;
+	// width: 100%;
 	overflow: auto;
 }
 .dialog-header {
@@ -192,6 +206,9 @@ html, body {
 			&:hover {
 				background: #92b4f7;
 			}
+		}
+		td {
+			padding: 6px;
 		}
 	}
 	.power-check {

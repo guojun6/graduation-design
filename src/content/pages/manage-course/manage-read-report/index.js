@@ -5,9 +5,9 @@ var $ = require('jquery');
  * @require '../../../libs/kindeditor/themes/default/default.css'
  */
 var baseURL = {
-    'contentURL': '/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
-    'devURLBase': 'http://localhost:8080',
+    'contentURL': '/graduation-design/dist/sp/pages/',
+    'localURLBase': 'http://192.168.43.36:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 };
 
@@ -19,7 +19,19 @@ var data = {
     alertSignal: 'del',
     courseId: null
 };
-
+var editorReady = false;
+KindEditor.ready(function(K) {
+    window.editor = K.create('#editor_id', {
+        basePath: '/sp/libs/kindeditor/',
+        //指定上传文件参数名称
+        filePostName  : "uploadFile",
+        //指定上传文件请求的url。
+        uploadJson : '/pic/upload',
+        //上传类型，分别为image、flash、media、file
+        dir : "image"
+    });
+    editorReady = true;
+});
 var index = {
     init: function() {
         var queryArr = location.search.slice(1).split('&'), 
@@ -225,6 +237,10 @@ var index = {
             index.setToast('请选择一个权限功能进行查看');
             return;
         }
+        if (typeof editor === 'undefined') {
+            index.setToast('文本编辑器加载中，请稍候');
+            return;
+        }
         $('.textarea-box').closest('.barrier').removeClass('hide');
         var i = index.findIndexByKey(data.courseList, 'id', data.selectCourseId[0]);
 
@@ -236,12 +252,16 @@ var index = {
                 id: data.selectCourseId[0],
                 review: editor.html()
             },
+            xhrFields: {
+                withCredentials: true
+            },
             success: function(res) {
                 if (res.status !== 200) {
                     index.setToast('保存失败 code：' + res.status);
                 } else {
                     index.setToast('保存成功');
                     $('.textarea-box').closest('.barrier').addClass('hide');
+                    location.reload();
                 }
             }
         })

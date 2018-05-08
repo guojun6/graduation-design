@@ -43,8 +43,9 @@
         <div class="account">
             <el-button
                 class="btn-account"
-                v-if="!isLogin">
-                <a href="/sp/pages/account/">登录/注册</a>
+                v-if="!isLogin"
+                @click="linkToLogin">
+                <span>登录/注册</span>
             </el-button>
             <div
                 class="user-info"
@@ -109,6 +110,9 @@ export default {
                 console.log(err);
             })
         },
+        linkToLogin() {
+            location.href = '/graduation-design/dist/sp/pages/account/index.html?url=' + location.hash.slice(2);
+        },
         ...mapActions([
             'setUserInfo',
             'setIsLogin'
@@ -170,6 +174,7 @@ a {
 .btn-account {
     border: 0 none;
     background: #FFA500;
+    color: #fff;
 }
 .dropdown {
     a {
