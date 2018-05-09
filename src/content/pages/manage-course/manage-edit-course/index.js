@@ -24,20 +24,22 @@ var data = {
     filePath: '',
     courseStatus: null
 };
-var editorReady = false;
-KindEditor.ready(function(K) {
-    window.editor = K.create('#editor_id', {
-        basePath: '/sp/libs/kindeditor/',
-        //指定上传文件参数名称
-        filePostName  : "uploadFile",
-        //指定上传文件请求的url。
-        uploadJson : '/pic/upload',
-        //上传类型，分别为image、flash、media、file
-        dir : "image"
-    });
-    editorReady = true;
-    $('.full-screen').addClass('hide');
-});
+editorReady = false;
+console.log('editor', editorReady)
+// KindEditor.ready(function(K) {
+//                 editor = K.create('#editor_id', {
+//                     basePath: '/sp/libs/kindeditor/',
+//                     //指定上传文件参数名称
+//                     filePostName  : "uploadFile",
+//                     //指定上传文件请求的url。
+//                     uploadJson : '/pic/upload',
+//                     //上传类型，分别为image、flash、media、file
+//                     dir : "image"
+//                 });
+//                 editorReady = true;
+//                 console.log('sad')
+//                 // $('.full-screen').addClass('hide');
+//             });
 var index = {
     init: function() {
         data.courseId = index.formatQuery(location.search).id;
