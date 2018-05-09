@@ -138,7 +138,10 @@ export default {
         }).then((RES) => {
             return RES.json();
         }).then((res) => {
-            if (res.status === 200 && res.data.name.indexOf('管理员') > -1) {
+            if (
+                res.status === 200 &&
+                (res.data.name.indexOf('管理员') > -1 || res.data.name.indexOf('老师') > -1)
+            ) {
                 this.isManager = true;
             }
         });
