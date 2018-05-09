@@ -22,10 +22,10 @@ var data = {
     selectedPid: null,
     uploading: false,
     filePath: '',
-    courseStatus: null
+    courseStatus: 4
 };
 editorReady = false;
-console.log('editor', editorReady)
+// console.log('editor', editorReady)
 // KindEditor.ready(function(K) {
 //                 editor = K.create('#editor_id', {
 //                     basePath: '/sp/libs/kindeditor/',
