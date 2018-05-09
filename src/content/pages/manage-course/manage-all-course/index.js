@@ -303,14 +303,12 @@ var index = {
         return -1;
     },
     openDialog: function() {
-        window.open('http://localhost:4000/graduation-design/dist/sp/pages/manage-course/manage-edit-course/index.html');
         if (data.selectCourseId.length !== 1) {
             index.setToast('请选择一个实验进行编辑');
             return;
         }
         if (data.userInfo.roleName.indexOf('老师') > -1) {
-            // location.href = '/graduation-design/dist/sp/pages/manage-course/manage-edit-course/index.html?id=' + data.selectCourseId[0];
-            window.open('/graduation-design/dist/sp/pages/manage-course/manage-edit-course/index.html?id=' + data.selectCourseId[0]);
+            location.href = '/graduation-design/dist/sp/pages/manage-course/manage-edit-course/index.html?id=' + data.selectCourseId[0];
         } else {
             // console.log(data.courseList[index.findIndexByKey(data.courseList, 'id', data.selectCourseId[0])].status)
             $('#power-status').val(data.courseList[index.findIndexByKey(data.courseList, 'id', data.selectCourseId[0])].status);
