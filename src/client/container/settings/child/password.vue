@@ -11,6 +11,10 @@
             </div>
             <p class="tips">tips:提交后登录邮箱查看邮件进行下一步操作</p>
         </div>
+
+        <template v-if="$route.path === '/password'">
+            <bottom-footer class="bottom"/>
+        </template>
     </div>
 </template>
 <script>
@@ -18,6 +22,7 @@ import {
     Button,
     Input
 } from 'element-ui';
+import  BottomFooter from '../../../components/bottom-footer';
 import {mapActions} from 'vuex';
 import {object2Query} from '../../../../utils/common';
 
@@ -30,7 +35,11 @@ export default {
     },
     components: {
         [Button.name]: Button,
-        [Input.name]: Input
+        [Input.name]: Input,
+        [BottomFooter.name]: BottomFooter
+    },
+    created() {
+        console.log(this.$route)
     },
     methods: {
         submit() {
@@ -57,6 +66,11 @@ export default {
                         txt: '提交失败，code:' + res.status
                     });
                     this.isSubmited = false;
+                } else {
+                    this.setToast({
+                        showTime: Date.now(),
+                        txt: res.msg
+                    });
                 }
             })
         },
@@ -68,8 +82,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bottom {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translate(-50%,0%);
+}
+.password {
+    padding: 60px 0;
+    text-align: center;
+}
 .input-control {
-    margin: 10px;
+    margin: 10px auto;
     width: 260px;
 }
 .tips {

@@ -25,7 +25,7 @@ export default {
             if (res.status === 200) {
                 context.commit(SET_USER_INFO, res.data);
                 context.commit(SET_IS_LOGIN, true);
-            } else if (res.status === 300) {
+            } else {
                 context.commit(SET_IS_LOGIN, false);
             }
         }).catch((err) => {

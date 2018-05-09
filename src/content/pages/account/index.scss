@@ -78,6 +78,7 @@ a {
     background: url(./images/bg.jpg) no-repeat;
 }
 .main {
+    position: relative;
     float: right;
     width: 380px;
     margin: 80px 60px;
@@ -197,4 +198,18 @@ a {
     background: #fff;
     text-align: center;
     color: #999;
+}
+.forget {
+    position: absolute;
+    bottom: 40px;
+    right: 20px;
+    color: #666;
+    padding: 0 10px;
+    a {
+        color: #666;
+        &:hover {
+            text-decoration: underline;
+        }
+        
+    }
 }

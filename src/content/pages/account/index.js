@@ -88,7 +88,7 @@ var index = {
                 withCredentials: true
             },
             success: function(res) {
-                console.log(res)
+                console.log(1)
                 if (res.status === 200) {
                     if (data.linkURL) {
                         location.href = data.linkURL;
@@ -101,6 +101,8 @@ var index = {
                     //         withCredentials: true
                     //     },
                     // })
+                } else {
+                    index.setToast(res.msg);
                 }
             },
             error: function(err) {
@@ -168,6 +170,8 @@ var index = {
                             } else {
                                 location.href = '/';
                             }
+                        } else {
+                            index.setToast(res.msg);
                         }
                     },
                     error: function(err) {

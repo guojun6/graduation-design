@@ -57,10 +57,14 @@ export default {
     },
     computed: {
         ...mapState([
-            'userInfo'
+            'userInfo',
+            'isLogin'
         ])
     },
     created() {
+        if (!this.isLogin) {
+            location.href = '/graduation-design/dist/sp/pages/account/index.html';
+        }
         this.getReportList(1);
     },
     components: {

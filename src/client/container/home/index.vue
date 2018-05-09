@@ -196,7 +196,7 @@ export default {
             top: 100%;
             left: 0;
             width: 100%;
-            max-width: 300px;
+            // max-width: 300px;
             padding: 10px 0;
             color: #fff;
             background: #d75f1d;

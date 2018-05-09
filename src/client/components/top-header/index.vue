@@ -56,7 +56,10 @@
                     :src="userInfo.profilehead">
                 <ul class="user-operate">
                     <li>
-                        <router-link to="settings">个人中心</router-link>
+                        <router-link to="/settings">个人中心</router-link>
+                    </li>
+                    <li v-if="isManager">
+                        <a href="/graduation-design/dist/sp/pages/manage/index.html">管理后台</a>
                     </li>
                     <li @click="logout">退出</li>
                 </ul>
@@ -73,9 +76,15 @@ import {
     DropdownItem,
     DropdownMenu
 } from 'element-ui';
+import {object2Query} from '../../../utils/common';
 
 export default {
     name: 'top-header',
+    data() {
+        return {
+            isManager: false
+        };
+    },
     computed: {
         ...mapState({
             userInfo: 'userInfo',
@@ -121,6 +130,18 @@ export default {
     created() {
         console.log(this.userInfo, this.isLogin)
         // this.setUserInfo();
+        fetch(localURLBase + '/roleController/getRoleById' + object2Query({
+            id: this.userInfo.role
+        }), {
+            mode: 'cors',
+            credentials: 'include'
+        }).then((RES) => {
+            return RES.json();
+        }).then((res) => {
+            if (res.status === 200 && res.data.name.indexOf('管理员') > -1) {
+                this.isManager = true;
+            }
+        });
     }
 };
 </script>

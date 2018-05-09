@@ -66,7 +66,10 @@ var router = new VueRouter({
     }, {
         path: '/report/',
         component: Report
-    }]
+    }, {
+        path: '/password',
+        component: SettingsPassword
+    }, ]
 });
 
 router.beforeEach(async function(to, from, next) {
