@@ -169,7 +169,7 @@ export default {
             })
         },
         initWebSocket() {
-            socket = new WebSocket('ws://localhost:8080/chatServer');
+            socket = new WebSocket('ws://192.168.43.36:8080/chatServer');
             socket.onopen = (e) => {
                 console.log('sass')
                 console.log(socket.readyState)

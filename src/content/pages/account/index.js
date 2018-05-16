@@ -1,8 +1,8 @@
 var $ = require('jquery');
 var URLBase = {
     'contentURL': '/graduation-design/dist/sp/pages/',
-    'localURLBase': 'http://localhost:8080',
-    'devURLBase': 'http://localhost:8080',
+    'localURLBase': 'http://192.168.43.36:8080',
+    'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
 }
 /**
