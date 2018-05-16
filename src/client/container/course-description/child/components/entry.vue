@@ -1,14 +1,17 @@
 <template>
     <div class="entry">
         <div class="btn">
-            <router-link to="/course-list">进入实验</router-link>
+            <router-link :to="'/course-list/' + $route.params.catId">进入实验</router-link>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'entry'
+    name: 'entry',
+    created() {
+        // console.log(this.$route.params.catId);
+    }
 }
 </script>
 

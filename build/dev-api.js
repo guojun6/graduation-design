@@ -269,7 +269,7 @@ Router.get('/itemCatController/list', function(req, res, next) {
             {
                 id: 1,
                 parentId: 0,
-                name: '物理',
+                name: '物理实验',
                 status: 1,
                 isParent: true,
                 visitorAllow: 1,
@@ -283,7 +283,7 @@ Router.get('/itemCatController/list', function(req, res, next) {
             }, {
                 id: 3,
                 parentId: 0,
-                name: '化学',
+                name: '化学实验',
                 status: 1,
                 isParent: true,
                 visitorAllow: 1,
@@ -577,7 +577,16 @@ Router.get('/functionController/getByRoleId', function(req, res, next) {
     });
 }); 
 
-
+Router.get('/roleController/getRoleById', function(req, res, next) {
+    res.send({
+        status: 200,
+        msg: '',
+        data: {
+            id: 1,
+            name: '管理员'
+        }
+    })
+})
 
 
 Router.all('*', function(req, res, next) { 

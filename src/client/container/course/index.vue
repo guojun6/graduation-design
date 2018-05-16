@@ -9,9 +9,15 @@
                 v-if="course">{{course.name}}</div>
             <el-button >
                 <a
+                    v-if="userInfo"
                     :href="'/graduation-design/dist/sp/pages/student-report/index.html?studentId='+ this.userInfo.id + '&courseId=' + courseId"
                     target="_blank">
                     写报告
+                </a>
+                <a
+                    v-else
+                    :href="'/graduation-design/dist/sp/pages/account?url=' + location.hash.slice(2)">
+                    去登录
                 </a>
             </el-button>
         </div>
@@ -25,7 +31,29 @@
                 </el-button>
             </div>
         </div>
-        <div class="chat-ctn"></div>
+        <div class="chat-ctn" ref="chatCtn">
+            <template v-for="(msg, index) in msgList">
+                <msg 
+                    v-if="!msg.first"
+                    :key="index"
+                    :avatarPath="msg.url"
+                    :self="msg.fromId == userInfo.id"
+                    :message="msg.message" />
+                <come-tip
+                    v-else
+                    :key="index"
+                    :name="msg.from"/>
+            </template>
+        </div>
+        <div class="input-msg">
+            <textarea
+            
+                ref="text"
+                @keyup="enterSendMsg"></textarea>
+        </div>
+        <div class="btns">
+            <el-button @click="sendMsg">发送</el-button>
+        </div>
         <bottom-footer/>
     </div>
 </template>
@@ -40,9 +68,13 @@ import {
 } from 'vuex';
 import {object2Query} from '../../../utils/common';
 import BottomFooter from '../../components/bottom-footer';
+import Msg from './components/msg';
+import ComeTip from './components/come-tip';
 
 var gameInstance;
 var webglReady = 0;
+
+var socket;
 
 export default {
     data() {
@@ -51,7 +83,9 @@ export default {
             gameInstance: gameInstance,
             course: null,
             isShowReport: false,
-            courseId: ''
+            courseId: '',
+            location: location,
+            msgList: []
         };
     },
     computed: {
@@ -62,12 +96,25 @@ export default {
     },
     components: {
         [Button.name]: Button,
-        [BottomFooter.name]: BottomFooter
+        [BottomFooter.name]: BottomFooter,
+        [Msg.name]: Msg,
+        [ComeTip.name]: ComeTip
     },
     created() {
-        console.log(this.$route.params);
+        // console.log(this.userInfo);
+        console.log(this.$route)
+        // if (!this.userInfo) {
+        //     this.setToast({
+        //         showTime: Date.now(),
+        //         txt: '请先登录哦'
+        //     });
+        //     setTimeout(function() {
+        //         location.href = '/graduation-design/dist/sp/pages/account';
+        //     }, 600);
+        // }
         this.courseId = this.$route.params.courseId;
-        this.initWebgl();
+        // this.initWebgl();
+        this.initWebSocket()
     },
     
     methods: {
@@ -120,6 +167,56 @@ export default {
             }).catch((err) => {
                 console.log(err);
             })
+        },
+        initWebSocket() {
+            socket = new WebSocket('ws://localhost:8080/chatServer');
+            socket.onopen = (e) => {
+                console.log('sass')
+                console.log(socket.readyState)
+                socket.send(JSON.stringify({
+                    message: '',
+                    first: true,
+                    item: this.courseId
+                }));
+            };
+            socket.onmessage = (e) => {
+                this.msgList.push(JSON.parse(e.data));
+                setTimeout(()=> {
+                    this.$refs.chatCtn.scrollTop = this.$refs.chatCtn.scrollHeight - this.$refs.chatCtn.offsetHeight + 40;
+                }, 100);
+                console.log('msg:  ');
+                console.log(e)
+            };
+            socket.onclose = function(e) {
+                console.log('close:  ');
+                this.$refs.chatCtn.readonly = true;
+                this.setToast({
+                    showTime: Date.now(),
+                    txt: '会话已结束'
+                });
+                console.log(e)
+            };
+            socket.onerror = function(a,b,c) {
+                console.log(a,b,c);
+            };
+        },
+        sendMsg() {
+            socket.send(JSON.stringify({
+                message: this.$refs.text.value,
+                first: false,
+                item: this.courseId
+            }));
+            this.$refs.text.value = '';
+        },
+        enterSendMsg(e) {
+            if (e.shiftKey && (e.key === 'Enter' || e.keyCode === 13)) {
+                socket.send(JSON.stringify({
+                    message: this.$refs.text.value,
+                    first: false,
+                    item: this.courseId
+                }));
+                this.$refs.text.value = '';
+            }
         },
         ...mapActions([
             'setToast'
@@ -175,7 +272,30 @@ a {
     // display: inline-block;
     // width: 28%;
     margin-top: 16px;
+    min-width: 800px;
     height: 300px;
+    padding: 0 20px;
+    background: #eee;
+    overflow: auto;
+}
+.input-msg {
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    min-width: 800px;
+    height: 160px;
+    padding: 10px 0;
     background: #fff;
+    textarea {
+        width: 94%;
+        padding: 0 3%;
+        height: 100%;
+        border: 0 none;
+        resize: none;
+        background: #fff;
+    }
+}
+.btns {
+    margin: 10px 0;
 }
 </style>
+

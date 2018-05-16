@@ -16,7 +16,7 @@ export default {
             context.commit(SET_IS_LOGIN, data.isLogin);
             return;
         }
-        await fetch(localURLBase + '/userController/getUserInfo'/* + '?l=1'*/, {
+        await fetch(localURLBase + '/userController/getUserInfo' + '?l=1', {
             mode: 'cors',
             credentials: 'include'
         }).then((RES) => {

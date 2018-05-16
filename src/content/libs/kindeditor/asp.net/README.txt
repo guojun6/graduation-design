@@ -9,4 +9,4 @@ KindEditor ASP.NET
 
 2. 将kindeditor/asp.net/bin目录下的dll文件复制到wwwroot/bin目录下。
 
-3. 打开浏览器，输入http://192.168.43.36:[P0RT]/kindeditor/asp.net/demo.aspx。
+3. 打开浏览器，输入http://localhost:[P0RT]/kindeditor/asp.net/demo.aspx。

@@ -36,11 +36,25 @@
                 </div>
             </div>
 
-
+            <div class="input-control">
+                <label class="input-name">筛选：</label>
+                <select id="power-dev">
+                    <option value="1">未开发</option>
+                    <option value="2">我的开发列表</option>
+                </select>
+            </div>
+            <div class="input-control hide">
+                <label class="input-name">是否完成：</label>
+                <select id="power-finish">
+                    <option value="1">已完成</option>
+                    <option value="2">未完成</option>
+                </select>
+            </div>
             <div class="btn-ctn">
-                <button class="btn-operate" id="btn-edit">编辑</button>
-                <button class="btn-operate" id="btn-del">删除</button>
-                <button class="btn-operate" id="btn-report">查看学生报告</button>
+                <button class="btn-operate" id="btn-accept">接受开发需求</button>
+                <button class="btn-operate hide" id="btn-del">删除</button>
+                <button class="btn-operate hide" id="btn-upload">上传代码包</button>
+                <input type="file" id="code-file"/>
             </div>
             <table class="course-list">
                 <thead>
@@ -48,12 +62,12 @@
                         <th><input id="select-all" type="checkbox"></th>
                         <th>实验ID</th>
                         <th>实验名称</th>
-                        <th id="teacher-name">老师名称</th>
+                        <th>老师名称</th>
                         <th>入口图片路径</th>
-                        <th id="webgl-path">webgl文件路径</th>
+                        <th>webgl文件路径</th>
                         <th>实验类目</th>
-                        <th title="1正常，2待上线，3删除">实验状态</th>
-                        <th title="1代表允许，2代表不允许">是否允许访客访问</th>
+                        <th>实验状态</th>
+                        <th title="1代表允许，0代表不允许">是否允许访客访问</th>
                     </tr>
                 </thead>
                 <tbody id="course-list"></tbody>
@@ -78,7 +92,7 @@
         </div>
         <article class="barrier hide">
             <section class='ctn' id="alert">
-                <div class="title">确定删除吗</div>
+                <div class="title"></div>
                 <div class="body"></div>
                 <div class='btn-box'>
                     <div class='btn-ensure'>确定</div>

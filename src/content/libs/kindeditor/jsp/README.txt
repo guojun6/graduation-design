@@ -12,4 +12,4 @@ KindEditor JSP
 	* commons-io-1.4.jar
 	* json_simple-1.1.jar
 
-3. 打开浏览器，输入http://192.168.43.36:[P0RT]/kindeditor/jsp/demo.jsp。
+3. 打开浏览器，输入http://localhost:[P0RT]/kindeditor/jsp/demo.jsp。

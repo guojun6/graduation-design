@@ -29,13 +29,13 @@ var router = new VueRouter({
         component: CourseDescription,
         children: [
             {
-                path: 'physical',
+                path: 'physical/:catId',
                 component: CourseDescriptionPhysical
             }, {
-                path: 'chemistry',
+                path: 'chemistry/:catId',
                 component: CourseDescriptionChemistry
             }, {
-                path: 'information',
+                path: 'information/:catId',
                 component: CourseDescriptionInformation
             }
         ]
@@ -43,7 +43,10 @@ var router = new VueRouter({
         path: '/about-us',
         component: AboutUs
     }, {
-        path: '/course-list',
+        path: '/course-list/:catId',
+        component: CourseList
+    }, {
+        path: '/course-list/',
         component: CourseList
     }, {
         path: '/course/:courseId',
@@ -90,14 +93,17 @@ router.beforeEach(async function(to, from, next) {
                 // if (res.status === 200) {
                 //     store.dispatch('setIsLogin', undefined);
                 // }
+                console.log('3')
+                next();
             });
+        } else {
+            next();
         }
+    } else {
+        next();
     }
 
     // console.log(store.state.isLogin);
-
-    
-    next();
 });
 
 export default router;

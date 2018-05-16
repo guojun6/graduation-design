@@ -110,11 +110,20 @@ export default {
             page: 1,
             rows: 100
         }));
-        this.getCourseList(object2Query({
+        
+        console.log(this.$route.params.catId)
+        if (this.$route.params.catId) {
+            this.nowFirstCatId = Number(this.$route.params.catId);
+            this.nowSecondCatId = -1;
+        }
+        var query = {
             page: 1,
             status: 1
-        }));
-        console.log(this.$route.params)
+        };
+        if (typeof this.nowFirstCatId === 'number') {
+            query.cid = this.nowFirstCatId;
+        }
+        this.getCourseList(object2Query(query));
     },
     methods: {
         getCourseList(query) {

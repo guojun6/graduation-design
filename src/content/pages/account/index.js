@@ -1,8 +1,8 @@
 var $ = require('jquery');
 var URLBase = {
     'contentURL': '/graduation-design/dist/sp/pages/',
-    'localURLBase': 'http://192.168.43.36:8080',
-    'devURLBase': 'http://192.168.43.36:8080',
+    'localURLBase': 'http://localhost:8080',
+    'devURLBase': 'http://localhost:8080',
     'prodURLBase': ''
 }
 /**
@@ -23,6 +23,7 @@ var index = {
             temp = queryArr[i].split('=');
             if (temp[0] === 'url') {
                 data.linkURL = decodeURIComponent(temp[1]);
+                console.log(decodeURIComponent(temp[1]))
                 if (data.linkURL[0] !== '/') {
                     data.linkURL = '/#/' + data.linkURL;
                 }

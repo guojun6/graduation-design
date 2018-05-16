@@ -5,8 +5,8 @@ var $ = require('jquery');
  */
 var baseURL = {
     'contentURL': '/graduation-design/dist/sp/pages/',
-    'localURLBase': 'http://192.168.43.36:8080',
-    'devURLBase': 'http://192.168.43.36:8080',
+    'localURLBase': 'http://localhost:8080',
+    'devURLBase': 'http://localhost:8080',
     'prodURLBase': ''
 };
 
@@ -116,14 +116,14 @@ var index = {
         // 删除权限
         $('#btn-del').on('click', function(e) {
             if (data.selectCourseId.length === 0) {
-                index.setToast('请选择至少一个权限功能进行删除');
+                index.setToast('请选择至少一个实验进行删除');
                 return;
             }
             $('#alert')
                 .closest('.barrier')
                 .removeClass('hide')
                 .find('.body')
-                .text('编号为' + data.selectCourseId.join(', ') + '的权限功能吗？');
+                .text('编号为' + data.selectCourseId.join(', ') + '的实验吗？');
         });
         // 编辑权限
         $('#btn-edit').on('click', function(e) {
@@ -200,7 +200,8 @@ var index = {
     getTestList: function(page) {
         var api;
         if (data.userInfo.roleName === '老师') {
-            
+            $('#teacher-name').addClass('hide');
+            $('#webgl-path').addClass('hide');
             api = '/itemController/listByTeacher';
         } else {
             $('#btn-report').addClass('hide');
@@ -226,11 +227,12 @@ var index = {
                                 .append($('<td><input class="course-check" type="checkbox"></td>'))
                                 .append($('<td>' + res.data[i].id + '</td>'))
                                 .append($('<td>' + res.data[i].name + '</td>'))
-                                .append($('<td>' + res.data[i].imgUrl + '</td>'))
-                                .append($('<td>' + res.data[i].courseUrl + '</td>'))
+                                .append($('<td class="' + (data.userInfo.roleName === '老师' ? 'hide' : '') + '">' + res.data[i].teacherName + '</td>'))
+                                .append($('<td><div class="entry-img"><img src="' + res.data[i].imgUrl + '"></div></td>'))
+                                .append($('<td class="' + (data.userInfo.roleName === '老师' ? 'hide' : '') + '">' + res.data[i].courseUrl + '</td>'))
                                 .append($('<td>' + data.classList[res.data[i].cid] + '</td>'))
                                 .append($('<td>' + 
-                                (res.data[i].status === 1 ? '正常' : (res.data[i].status === 2 ? '未上线' : (res.data[i].status === 4 ? '待审核' : '删除'))) + 
+                                (res.data[i].status === 1 ? '正常' : (res.data[i].status === 2 ? '下架' : (res.data[i].status === 4 ? '待审核' : (res.data[i].status === 5 ? '待开发' : '删除')))) + 
                                 '</td>'))
                                 .append($('<td>' + 
                                 (res.data[i].visitorAllow == 1 ? '允许' : '不允许') +
@@ -331,7 +333,7 @@ var index = {
     },
     readReport: function() {
         if (data.selectCourseId.length !== 1) {
-            index.setToast('请选择一个权限功能进行编辑');
+            index.setToast('请选择一个实验进行编辑');
             return;
         }
         location.href = '/graduation-design/dist/sp/pages/manage-course/manage-read-report/index.html?courseId=' + data.selectCourseId[0];

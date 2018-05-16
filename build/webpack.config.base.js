@@ -16,7 +16,7 @@ var ExtractVueStyle = new ExtractTextPlugin('css/[name]-[chunkhash].css'),
 
 module.exports = {
     entry: {
-        'public': ['vue', 'vuex', 'vue-router'],
+        'public': ['babel-polyfill', 'vue', 'vuex', 'vue-router'],
         'app': path.resolve(__dirname, '../src/client/index.js'), 
     },
     output: {
@@ -30,8 +30,8 @@ module.exports = {
         ExtractStyle,
         new webpack.DefinePlugin({
             'contentURL': JSON.stringify('/graduation-design/dist/sp/pages/'),
-            'localURLBase': JSON.stringify('http://192.168.43.36:8080'),
-            'devURLBase': JSON.stringify('http://192.168.43.36:8080'),
+            'localURLBase': JSON.stringify('http://localhost:8080'),
+            'devURLBase': JSON.stringify('http://localhost:8080'),
             'prodURLBase': JSON.stringify(''),
             'expURL': JSON.stringify('')
         })

@@ -27,7 +27,7 @@ export default {
         //         //指定上传文件参数名称
         //         filePostName  : "uploadFile",
         //         //指定上传文件请求的url。
-        //         uploadJson : 'http://192.168.43.36/pic/upload',
+        //         uploadJson : 'http://localhost/pic/upload',
         //         //上传类型，分别为image、flash、media、file
         //         dir : "image"
         //     });

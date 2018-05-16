@@ -245,9 +245,9 @@
 	font-size: 12px;
 	background: #FFE4B5;
 }
-.entry-img {
-	width: 30px;
-	>img {
-		width: 100%;
-	}
+
+input[type=file] {
+	position: absolute;
+	left: -10000px;
+	top: -100000px;
 }

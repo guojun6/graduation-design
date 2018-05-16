@@ -43,7 +43,7 @@
             <div class="lab3_intro clearfix">
                 
                 <div class="lab3_left">
-                <img src="./img/chemistry/ch02.jpg" alt="lamp" style="width:600px;height:300px;">
+                <img src="./img/chemistry/ch02.jpg" alt="lamp" style="width:400px;height:200px;">
                 </div>
                 <div class="lab3_right">
                     <h3 class="title1">无机化学实验</h3>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="lab2_right">
                     
-                <img src="./img/chemistry/ch03.jpg" alt="elect1" style="width:600px;height:300px;">
+                <img src="./img/chemistry/ch03.jpg" alt="elect1" style="width:400px;height:200px;">
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
             <div class="lab3_intro clearfix">
                 
                 <div class="lab3_left">
-                <img src="./img/chemistry/ch04.jpg" alt="lamp" style="width:600px;height:300px;">
+                <img src="./img/chemistry/ch04.jpg" alt="lamp" style="width:400px;height:200px;">
                 </div>
                 <div class="lab3_right">
                     <h3 class="title1">物理化学实验</h3>
@@ -114,15 +114,15 @@ export default {
 }
 .container1{background:#f2f2f2;}
 .intro{
-    padding: 10px;
+    padding: 20px 10px 10px;
 	margin: 0 auto;
 	height: 150px;
 	font-size: 16px;
 	line-height: 1.8;
-	margin-top: 100px;
+	/*margin-top: 100px;*/
 }
 .title1{padding: 10px;margin-bottom:50px;font-size: 24px;}
-.desc{padding: 10px;font-size: 16px;line-height: 40px;}
+.desc{padding: 10px;font-size: 16px;line-height: 1.8;}
 .lab2{
 	background: #f2f2f2;width: 100%;
     padding: 20px 0;
@@ -132,7 +132,7 @@ export default {
 	margin: 0 auto;
 }
 .lab2_left{
-	width: 33.33%;
+	width: 50%;
 	float: left;
 	height: 100%;
 }
@@ -141,7 +141,7 @@ export default {
     right: 0;
     top: 50%;
     transform: translate(0, -50%);
-	width: 66.6%;
+	width: 50%;
 	float: right;
     text-align: right;
     overflow: hidden;
@@ -156,6 +156,6 @@ export default {
     top: 50%;
     transform: translate(0, -50%);
 }
-.lab3_left{width:66.6%;}
-.lab3_right{width:33.3%;height:100%;margin-left: 66.6%}
+.lab3_left{width:50%;}
+.lab3_right{width:50%;height:100%;margin-left: 50%}
 </style>

@@ -24,7 +24,7 @@
         <div class="entry-box">
              <div
                 class="course-entry"
-                @click="() => {this.$router.push('/course-description/physical');}">
+                @click="() => {this.$router.push('/course-description/physical/' + physicalCatId);}">
                 <div class="img-box">
                     <img src="./img/physical.jpg">
                 </div>
@@ -34,7 +34,7 @@
             </div>   
             <div
                 class="course-entry"
-                @click="() => {this.$router.push('/course-description/chemistry');}">
+                @click="() => {this.$router.push('/course-description/chemistry/' + chemistryCatId);}">
                 <div class="img-box">
                     <img src="./img/chemistry.jpg">
                 </div>
@@ -97,7 +97,9 @@ export default {
             //     infinite:1,//无限滚动前后遍历数
             //     slidesToScroll:1,//每次滑动项数
             // }
-            bannerInfo: []
+            bannerInfo: [],
+            physicalCatId: null,
+            chemistryCatId: null
         };
     },
     components: {
@@ -113,6 +115,7 @@ export default {
 
         },
         getBanner() {
+            console.log('4')
             fetch(localURLBase + '/imageController/getImagesInfoByType' + object2Query({
                 type: 1,
                 page: 1
@@ -124,10 +127,37 @@ export default {
             }).then((res) => {
                 if (res.status === 200) this.bannerInfo = res.data;
             })
+        },
+        getCatList() {
+            console.log('1')
+            fetch(localURLBase + '/itemCatController/list' + object2Query({
+                page: 1,
+                // rows: 100
+            }), {
+                mode: 'cors',
+                credentials: 'include'
+            }).then((RES) => {
+                return RES.json();
+            }).then((res) => {
+                console.log('2')
+                if (res.status === 200) {
+                    for (let i = 0, l = res.data.length; i < l; i++) {
+                        if (res.data[i].name === '物理实验') {
+                            this.physicalCatId = res.data[i].id;
+                        } else if (res.data[i].name === '化学实验') {
+                            this.chemistryCatId = res.data[i].id;
+                        }
+                    }
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
+            
         }
     },
     created() {
         this.getBanner();
+        this.getCatList();
     }
 };
 </script>

@@ -128,15 +128,15 @@ export default {
 }
 .container1{background:#f2f2f2;}
 .intro{
-    padding: 10px;
+    padding: 20px 10px 10px;
 	margin: 0 auto;
 	height: 150px;
 	font-size: 16px;
 	line-height: 1.8;
-	margin-top: 100px;
+	/*margin-top: 40px;*/
 }
 .title1{padding: 10px;margin-bottom:50px;font-size: 24px;}
-.desc{padding: 10px;font-size: 16px;line-height: 40px;}
+.desc{padding: 10px;font-size: 16px;line-height: 1.8;}
 .lab2{
 	background: #f2f2f2;width: 100%;
 }

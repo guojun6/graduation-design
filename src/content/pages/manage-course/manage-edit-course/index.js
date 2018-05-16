@@ -11,8 +11,8 @@ var arrangeLevelList = require('utils').arrangeLevelList;
 
 var baseURL = {
     'contentURL': '/graduation-design/dist/sp/pages/',
-    'localURLBase': 'http://192.168.43.36:8080',
-    'devURLBase': 'http://192.168.43.36:8080',
+    'localURLBase': 'http://localhost:8080',
+    'devURLBase': 'http://localhost:8080',
     'prodURLBase': ''
 };
 var data = {
@@ -22,9 +22,10 @@ var data = {
     selectedPid: null,
     uploading: false,
     filePath: '',
-    courseStatus: 4
+    courseStatus: 4,
+    courseUrl: ''
 };
-editorReady = false;
+// editorReady = false;
 // console.log('editor', editorReady)
 // KindEditor.ready(function(K) {
 //                 editor = K.create('#editor_id', {
@@ -61,7 +62,7 @@ var index = {
                 visitorAllow: Number($('#allow-visitor').val()),
                 desc: editor.html(),
                 // teacherName: $('#test-teacher').val(),
-                courseUrl: $('#test-webgl').val(),
+                courseUrl: data.courseUrl,// $('#test-webgl').val(),
                 imgUrl: data.filePath,
             };
             if (data.courseId) {
@@ -72,6 +73,10 @@ var index = {
                 success: function(res) {
                     if (res.status === 200) {
                         index.setToast('保存成功');
+
+                        setTimeout(function() {
+                            location.href = '/graduation-design/dist/sp/pages/manage-course/manage-all-course/index.html';
+                        }, 500);
                     } else {
                         index.setToast('保存失败，code: ' + res.status);
                     }
@@ -214,7 +219,8 @@ var index = {
                     // $('#test-teacher').val(res.data.teacherName);
                     $('#allow-visitor').val(res.data.visitorAllow);
                     $('#power-path-show').text(res.data.imgUrl);
-                    $('#test-webgl').val(res.data.courseUrl);
+                    // $('#test-webgl').val(res.data.courseUrl);
+                    data.courseUrl = res.data.courseUrl;
                     $.ajax(baseURL.localURLBase + '/itemDescController/listByItemId', {
                         xhrFields: {
                             withCredentials: true
@@ -229,6 +235,7 @@ var index = {
                             } else {
                                 var timer = setInterval(function() {
                                     console.log(res.data)
+                                    console.log(editorReady)
                                     if (editorReady) {
                                         editor.html(res.data.itemDesc);
                                         clearInterval(timer);

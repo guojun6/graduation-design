@@ -21,10 +21,10 @@
                     </span>
                     <el-dropdown-menu class="dropdown" slot="dropdown">
                         <el-dropdown-item>
-                            <router-link to="/course-description/physical">物理实验</router-link>
+                            <router-link :to="'/course-description/physical/' + physicalCatId">物理实验</router-link>
                         </el-dropdown-item>
                         <el-dropdown-item>
-                            <router-link to="/course-description/chemistry">化学实验</router-link>
+                            <router-link :to="'/course-description/chemistry/' + chemistryCatId">化学实验</router-link>
                         </el-dropdown-item>
                         <el-dropdown-item>
                             <router-link to="/course-description/information">信息科学实验</router-link>
@@ -82,7 +82,9 @@ export default {
     name: 'top-header',
     data() {
         return {
-            isManager: false
+            isManager: false,
+            physicalCatId: null,
+            chemistryCatId: null
         };
     },
     computed: {
@@ -122,6 +124,25 @@ export default {
         linkToLogin() {
             location.href = '/graduation-design/dist/sp/pages/account/index.html?url=' + location.hash.slice(2);
         },
+        getCatList() {
+            fetch(localURLBase + '/itemCatController/list' + object2Query({
+                page: 1
+            })).then((RES) => {
+                return RES.json();
+            }).then((res) => {
+                if (res.status === 200) {
+                    for (let i = 0, l = res.data.length; i < l; i++) {
+                        if (res.data[i].name === '物理实验') {
+                            this.physicalCatId = res.data[i].id;
+                        } else if (res.data[i].name === '化学实验') {
+                            this.chemistryCatId = res.data[i].id;
+                        }
+                    }
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
+        },
         ...mapActions([
             'setUserInfo',
             'setIsLogin'
@@ -130,21 +151,24 @@ export default {
     created() {
         console.log(this.userInfo, this.isLogin)
         // this.setUserInfo();
-        fetch(localURLBase + '/roleController/getRoleById' + object2Query({
-            id: this.userInfo.role
-        }), {
-            mode: 'cors',
-            credentials: 'include'
-        }).then((RES) => {
-            return RES.json();
-        }).then((res) => {
-            if (
-                res.status === 200 &&
-                (res.data.name.indexOf('管理员') > -1 || res.data.name.indexOf('老师') > -1)
-            ) {
-                this.isManager = true;
-            }
-        });
+        if ( this.userInfo) {
+            console.log('sa')
+            fetch(localURLBase + '/roleController/getRoleById' + object2Query({
+                id: this.userInfo.role
+            }), {
+                mode: 'cors',
+                credentials: 'include'
+            }).then((RES) => {
+                return RES.json();
+            }).then((res) => {
+                if (
+                    res.status === 200 &&
+                    (res.data.name.indexOf('管理员') > -1 || res.data.name.indexOf('老师') > -1)
+                ) {
+                    this.isManager = true;
+                }
+            });
+        }
     }
 };
 </script>

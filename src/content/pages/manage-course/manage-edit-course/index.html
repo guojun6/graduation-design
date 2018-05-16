@@ -44,10 +44,10 @@
                 <div class="input-file-show" id="power-path-show"></div>
                 <input class="input-file" id="power-path" type="file"/>
             </div>
-            <div class="input-control">
+            <!--<div class="input-control">
                 <label class="input-name">webgl文件路径：</label>
                 <input id="test-webgl" type="text"/>
-            </div>
+            </div>-->
             <div class="doc-title">实验文档：</div>
             <div class="textarea-box">
                 <textarea
@@ -70,7 +70,7 @@
             require(['./index'], function(script) {
                 script.init();
             });
-            var editor, editorReady;
+            var editor, editorReady = false;
             KindEditor.ready(function(K) {
                 editor = K.create('#editor_id', {
                     basePath: '/sp/libs/kindeditor/',
