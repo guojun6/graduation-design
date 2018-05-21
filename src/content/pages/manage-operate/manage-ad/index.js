@@ -225,7 +225,7 @@ var index = {
                                 .append($('<td>' + res.data[i].name + '</td>'))
                                 .append($('<td>' + res.data[i].type + '</td>'))
                                 .append($('<td>' + res.data[i].description + '</td>'))
-                                .append($('<td>' + res.data[i].path + '</td>'))
+                                .append($('<td><div class="entry-img"><img src="' + res.data[i].path + '"></div></td>'))
                                 .append($('<td>' + res.data[i].url + '</td>'))
                         )
                     }

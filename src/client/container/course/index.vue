@@ -47,12 +47,18 @@
         </div>
         <div class="input-msg">
             <textarea
-            
+                :disabled="!isLogin"
                 ref="text"
                 @keyup="enterSendMsg"></textarea>
         </div>
         <div class="btns">
-            <el-button @click="sendMsg">发送</el-button>
+            <el-button
+                ref="sendBtn"
+                :disabled="!isLogin"
+                @click="sendMsg">
+                发送
+            </el-button>
+            <span class="shift">提示：按住shift+enter也可以发送</span>
         </div>
         <bottom-footer/>
     </div>
@@ -113,8 +119,14 @@ export default {
         //     }, 600);
         // }
         this.courseId = this.$route.params.courseId;
-        // this.initWebgl();
-        this.initWebSocket()
+        this.initWebgl();
+        this.initWebSocket();
+        if (!this.isLogin) {
+            this.setToast({
+                txt: '登录后才能和大家一起聊天哦',
+                showTime: Date.now()
+            });
+        }
     },
     
     methods: {
@@ -171,8 +183,6 @@ export default {
         initWebSocket() {
             socket = new WebSocket('ws://192.168.43.36:8080/chatServer');
             socket.onopen = (e) => {
-                console.log('sass')
-                console.log(socket.readyState)
                 socket.send(JSON.stringify({
                     message: '',
                     first: true,
@@ -180,21 +190,21 @@ export default {
                 }));
             };
             socket.onmessage = (e) => {
+                console.log(e);
                 this.msgList.push(JSON.parse(e.data));
                 setTimeout(()=> {
                     this.$refs.chatCtn.scrollTop = this.$refs.chatCtn.scrollHeight - this.$refs.chatCtn.offsetHeight + 40;
                 }, 100);
-                console.log('msg:  ');
-                console.log(e)
             };
-            socket.onclose = function(e) {
+            socket.onclose = (e) => {
                 console.log('close:  ');
-                this.$refs.chatCtn.readonly = true;
+                console.log(e)
+                this.$refs.chatCtn.disabled = true;
+                this.$refs.sendBtn.disabled = true;
                 this.setToast({
                     showTime: Date.now(),
                     txt: '会话已结束'
                 });
-                console.log(e)
             };
             socket.onerror = function(a,b,c) {
                 console.log(a,b,c);
@@ -296,6 +306,10 @@ a {
 }
 .btns {
     margin: 10px 0;
+}
+.shift {
+    padding: 30px;
+    color: #fff;
 }
 </style>
 

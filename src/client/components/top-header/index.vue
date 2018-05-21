@@ -169,6 +169,7 @@ export default {
                 }
             });
         }
+        this.getCatList();
     }
 };
 </script>

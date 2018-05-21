@@ -171,6 +171,13 @@ export default {
                 }));
                 this.coursePageCount = null;
                 return;
+            } else {
+                this.nowSecondCatId = -1;
+                this.getCourseList(object2Query({
+                    page: 1,
+                    cid: this,nowFirstCatId,
+                    status: 1,
+                }));
             };
             for (let i = 0, l = this.catList.length; i < l; i++) {
                 if (this.catList[i].id === val) {
