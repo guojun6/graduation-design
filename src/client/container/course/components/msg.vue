@@ -73,8 +73,12 @@ export default {
         padding: 8px;
         margin: 8px 0;
         border-radius: 6px;
-        white-space: pre;
+        white-space: pre-wrap;
+        word-break: break-all;
         background: #fff; //#00BFFF;
+        p {
+            word-break: break-all;
+        }
     }
 }
 </style>

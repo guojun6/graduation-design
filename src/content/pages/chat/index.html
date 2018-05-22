@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>T</title>
+        <script src="../../libs/require/2.1.18/require.js"></script>
+    </head> 
+    <body>
+        <div class="chat-ctn" id="chat-ctn">
+            <!--<template v-for="(msg, index) in msgList">
+                <msg 
+                    v-if="!msg.first"
+                    :key="index"
+                    :avatarPath="msg.url"
+                    :self="msg.fromId == userInfo.id"
+                    :message="msg.message" />
+                <come-tip
+                    v-else
+                    :key="index"
+                    :name="msg.from"/>
+            </template>-->
+        </div>
+        <div class="input-msg">
+            <textarea
+                id="text"></textarea>
+        </div>
+        <div class="btns">
+            <button
+                id="send-btn">
+                发送
+            </button>
+            <span class="shift">提示：按住shift+enter也可以发送</span>
+        </div>
+        <div class="toast-ctn">
+            <p class="toast-txt"></p>
+        </div>
+        <!--SCRIPT_PLACEHOLDER-->
+        <script>
+            require(['./index'], function(script) {
+                script.init();
+            });
+        </script>
+    </body>
+</html>

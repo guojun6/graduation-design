@@ -19,22 +19,22 @@ var data = {
     report: '',
     review: ''
 };
-var editorReady = false;
+// var editorReady = false;
 
-KindEditor.ready(function(K) {
-    window.editor = K.create('#editor_id', {
-        basePath: '/sp/libs/kindeditor/',
-        //指定上传文件参数名称
-        filePostName  : "uploadFile",
-        //指定上传文件请求的url。
-        uploadJson : '/reportController/pic/upload',
-        //上传类型，分别为image、flash、media、file
-        dir : "image"
-    });
+// KindEditor.ready(function(K) {
+//     window.editor = K.create('#editor_id', {
+//         basePath: '/sp/libs/kindeditor/',
+//         //指定上传文件参数名称
+//         filePostName  : "uploadFile",
+//         //指定上传文件请求的url。
+//         uploadJson : '/reportController/pic/upload',
+//         //上传类型，分别为image、flash、media、file
+//         dir : "image"
+//     });
     
-    editorReady = true;
-    $('.full-screen').addClass('hide');
-});
+//     editorReady = true;
+//     $('.full-screen').addClass('hide');
+// });
 var index = {
     init: function() {
         var queryArr = location.search.slice(1).split('&'), 

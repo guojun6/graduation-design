@@ -4,7 +4,7 @@ var URLBase = {
     'localURLBase': 'http://192.168.43.36:8080',
     'devURLBase': 'http://192.168.43.36:8080',
     'prodURLBase': ''
-}
+};
 /**
  * @require './index.scss'
  */

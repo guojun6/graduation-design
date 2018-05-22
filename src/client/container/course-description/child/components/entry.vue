@@ -40,6 +40,8 @@ export default {
             box-shadow: 0 0 10px 1px #FFA500;
         }
         a {
+            display: block;
+            height: 100%;
             color: #fff;
         }
     }

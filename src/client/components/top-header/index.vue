@@ -20,13 +20,13 @@
                         课程<i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                     <el-dropdown-menu class="dropdown" slot="dropdown">
-                        <el-dropdown-item>
+                        <el-dropdown-item class="course-item">
                             <router-link :to="'/course-description/physical/' + physicalCatId">物理实验</router-link>
                         </el-dropdown-item>
-                        <el-dropdown-item>
+                        <el-dropdown-item class="course-item">
                             <router-link :to="'/course-description/chemistry/' + chemistryCatId">化学实验</router-link>
                         </el-dropdown-item>
-                        <el-dropdown-item>
+                        <el-dropdown-item class="course-item">
                             <router-link to="/course-description/information">信息科学实验</router-link>
                         </el-dropdown-item>
                     </el-dropdown-menu>
@@ -127,7 +127,10 @@ export default {
         getCatList() {
             fetch(localURLBase + '/itemCatController/list' + object2Query({
                 page: 1
-            })).then((RES) => {
+            }), {
+                mode: 'cors',
+                credentials: 'include'
+            }).then((RES) => {
                 return RES.json();
             }).then((res) => {
                 if (res.status === 200) {
@@ -238,6 +241,7 @@ a {
     &:hover {
         .user-operate {
             display: block;
+            
         }
     }
     .user-avatar {
@@ -261,16 +265,29 @@ a {
     background: #fff;
     z-index: 100;
     > li {
-        padding: 6px 10px;
+        
         text-align: center;
         cursor: pointer;
         > a {
             color: inherit;
+            padding: 6px 10px;
+            display: block;
+            height: 100%;
+            
         }
         &:hover {
             background: #92b4f7;
             color: #fff;
         }
+        &:last-child {
+            padding: 6px 10px;
+        }
+    }
+}
+.course-item {
+    a {
+        display: block;
+        height: 100%;
     }
 }
 </style>

@@ -175,7 +175,7 @@ export default {
                 this.nowSecondCatId = -1;
                 this.getCourseList(object2Query({
                     page: 1,
-                    cid: this,nowFirstCatId,
+                    cid: this.nowFirstCatId,
                     status: 1,
                 }));
             };

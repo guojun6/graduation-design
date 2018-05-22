@@ -34,6 +34,7 @@ var index = {
             }
             index.setNowPage(1);
             index.getPowerList(1);
+            data.selectPowerListId = [];
         });
         $('#btn-page-prev').on('click', function(e) {
             if (data.nowPage === 1) {
@@ -42,6 +43,7 @@ var index = {
             }
             index.setNowPage(data.nowPage - 1);
             index.getPowerList(Number(data.nowPage));
+            data.selectPowerListId = [];
         });
         $('#btn-page-next').on('click', function(e) {
             if (data.nowPage === data.allPage) {
@@ -50,6 +52,7 @@ var index = {
             }
             index.setNowPage(data.nowPage + 1);
             index.getPowerList(Number(data.nowPage));
+            data.selectPowerListId = [];
         });
         $('#btn-page-tail').on('click', function(e) {
             if (data.nowPage === data.allPage) {
@@ -58,6 +61,7 @@ var index = {
             }
             index.setNowPage(data.allPage);
             index.getPowerList(Number(data.allPage));
+            data.selectPowerListId = [];
         });
         $('#btn-go-page').on('click', function(e) {
             var pageNum = $('#num-of-page').val();
@@ -71,6 +75,7 @@ var index = {
             }
             index.getPowerList(Number(pageNum));
             index.setNowPage(Number(pageNum));
+            data.selectPowerListId = [];
         });
         $('#btn-page-refresh').on('click', function(e) {
             location.reload();

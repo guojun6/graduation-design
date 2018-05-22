@@ -31,7 +31,7 @@
                 </el-button>
             </div>
         </div>
-        <div class="chat-ctn" ref="chatCtn">
+        <!--<div class="chat-ctn" ref="chatCtn">
             <template v-for="(msg, index) in msgList">
                 <msg 
                     v-if="!msg.first"
@@ -44,8 +44,8 @@
                     :key="index"
                     :name="msg.from"/>
             </template>
-        </div>
-        <div class="input-msg">
+        </div>-->
+        <!--<div class="input-msg">
             <textarea
                 :disabled="!isLogin"
                 ref="text"
@@ -59,7 +59,8 @@
                 发送
             </el-button>
             <span class="shift">提示：按住shift+enter也可以发送</span>
-        </div>
+        </div>-->
+        <iframe src="/graduation-design/dist/sp/pages/chat/index.html"/>
         <bottom-footer/>
     </div>
 </template>
@@ -80,7 +81,7 @@ import ComeTip from './components/come-tip';
 var gameInstance;
 var webglReady = 0;
 
-var socket;
+// var socket;
 
 export default {
     data() {
@@ -108,7 +109,7 @@ export default {
     },
     created() {
         // console.log(this.userInfo);
-        console.log(this.$route)
+        // console.log(this.$route)
         // if (!this.userInfo) {
         //     this.setToast({
         //         showTime: Date.now(),
@@ -120,7 +121,7 @@ export default {
         // }
         this.courseId = this.$route.params.courseId;
         this.initWebgl();
-        this.initWebSocket();
+        // this.initWebSocket();
         if (!this.isLogin) {
             this.setToast({
                 txt: '登录后才能和大家一起聊天哦',
@@ -180,54 +181,72 @@ export default {
                 console.log(err);
             })
         },
-        initWebSocket() {
-            socket = new WebSocket('ws://192.168.43.36:8080/chatServer');
-            socket.onopen = (e) => {
-                socket.send(JSON.stringify({
-                    message: '',
-                    first: true,
-                    item: this.courseId
-                }));
-            };
-            socket.onmessage = (e) => {
-                console.log(e);
-                this.msgList.push(JSON.parse(e.data));
-                setTimeout(()=> {
-                    this.$refs.chatCtn.scrollTop = this.$refs.chatCtn.scrollHeight - this.$refs.chatCtn.offsetHeight + 40;
-                }, 100);
-            };
-            socket.onclose = (e) => {
-                console.log('close:  ');
-                console.log(e)
-                this.$refs.chatCtn.disabled = true;
-                this.$refs.sendBtn.disabled = true;
-                this.setToast({
-                    showTime: Date.now(),
-                    txt: '会话已结束'
-                });
-            };
-            socket.onerror = function(a,b,c) {
-                console.log(a,b,c);
-            };
-        },
-        sendMsg() {
-            socket.send(JSON.stringify({
-                message: this.$refs.text.value,
-                first: false,
-                item: this.courseId
-            }));
-            this.$refs.text.value = '';
-        },
-        enterSendMsg(e) {
-            if (e.shiftKey && (e.key === 'Enter' || e.keyCode === 13)) {
-                socket.send(JSON.stringify({
-                    message: this.$refs.text.value,
-                    first: false,
-                    item: this.courseId
-                }));
-                this.$refs.text.value = '';
-            }
-        },
+        // initWebSocket() {
+        //     socket = new WebSocket('ws://192.168.43.36:8080/chatServer');
+        //     socket.onopen = (e) => {
+        //         socket.send(JSON.stringify({
+        //             message: '',
+        //             first: true,
+        //             item: this.courseId
+        //         }));
+        //     };
+        //     socket.onmessage = (e) => {
+        //         console.log(e);
+        //         this.msgList.push(JSON.parse(e.data));
+        //         setTimeout(()=> {
+        //             console.log('this.$refs.chatCtn:' ,this.$refs.chatCtn)
+        //             this.$refs.chatCtn.scrollTop = this.$refs.chatCtn.scrollHeight - this.$refs.chatCtn.offsetHeight + 40;
+        //         }, 100);
+        //     };
+        //     socket.onclose = (e) => {
+        //         console.log('close:  ');
+        //         console.log(e)
+        //         this.$refs.chatCtn.disabled = true;
+        //         this.$refs.sendBtn.disabled = true;
+        //         this.setToast({
+        //             showTime: Date.now(),
+        //             txt: '会话已结束'
+        //         });
+        //     };
+        //     socket.onerror = function(a,b,c) {
+        //         console.log(a,b,c);
+        //     };
+        // },
+        // sendMsg() {
+        //     if (this.$refs.text.value.length === 0) {
+        //         this.setToast({
+        //             showTime: Date.now(),
+        //             txt: '您还未输入内容哦~'
+        //         });
+        //         return;
+        //     }
+        //     socket.send(JSON.stringify({
+        //         message: this.$refs.text.value,
+        //         first: false,
+        //         item: this.courseId
+        //     }));
+        //     this.$refs.text.value = '';
+        // },
+        // enterSendMsg(e) {
+        //     console.log(this.$refs.text.value);
+        //     if (e.shiftKey && (e.key === 'Enter' || e.keyCode === 13)) {
+        //         console.log('zfdsfd')
+        //         if (this.$refs.text.value.length === 0) {
+        //             this.setToast({
+        //                 showTime: Date.now(),
+        //                 txt: '您还未输入内容哦~'
+        //             });
+        //             return;
+        //         }
+        //         console.log('sad')
+        //         socket.send(JSON.stringify({
+        //             message: this.$refs.text.value,
+        //             first: false,
+        //             item: this.courseId
+        //         }));
+        //         this.$refs.text.value = '';
+        //     }
+        // },
         ...mapActions([
             'setToast'
         ])
@@ -264,10 +283,10 @@ a {
         font-weight: bold;
     }
 }
-.canvas-ctn {
-    // display: inline-block;
-    // width: 70%;
-}
+// .canvas-ctn {
+//     // display: inline-block;
+//     // width: 70%;
+// }
 .control {
     border: 1px solid #666;
     border-top: 0;
@@ -277,39 +296,44 @@ a {
         float: right;
     }
 }
-.chat-ctn {
-    // float: right;
-    // display: inline-block;
-    // width: 28%;
-    margin-top: 16px;
-    min-width: 800px;
-    height: 300px;
-    padding: 0 20px;
-    background: #eee;
-    overflow: auto;
-}
-.input-msg {
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    min-width: 800px;
-    height: 160px;
-    padding: 10px 0;
-    background: #fff;
-    textarea {
-        width: 94%;
-        padding: 0 3%;
-        height: 100%;
-        border: 0 none;
-        resize: none;
-        background: #fff;
-    }
-}
+// .chat-ctn {
+//     // float: right;
+//     // display: inline-block;
+//     // width: 28%;
+//     margin-top: 16px;
+//     min-width: 800px;
+//     height: 300px;
+//     padding: 0 20px;
+//     background: #eee;
+//     overflow: auto;
+// }
+// .input-msg {
+//     box-sizing: border-box;
+//     border: 1px solid #ccc;
+//     min-width: 800px;
+//     height: 160px;
+//     padding: 10px 0;
+//     background: #fff;
+//     textarea {
+//         width: 94%;
+//         padding: 0 3%;
+//         height: 100%;
+//         border: 0 none;
+//         resize: none;
+//         background: #fff;
+//     }
+// }
 .btns {
     margin: 10px 0;
 }
-.shift {
-    padding: 30px;
-    color: #fff;
+// .shift {
+//     padding: 30px;
+//     color: #fff;
+// }
+
+iframe {
+    width: 100%;
+    height: 600px;
 }
 </style>
 

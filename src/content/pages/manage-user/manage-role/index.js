@@ -206,7 +206,7 @@ var index = {
                                     data.powerList[j].functionIds = '';
 
                                     for (var i = 0, l = res.data.length; i < l; i++) {
-                                        $('#litem' + j).append('[id: ' + res.data[i].id + ', name: ' + res.data[i].name + ']').append('<br/>');
+                                        $('#litem' + j).append(/*'[id: ' + res.data[i].id + ', name: ' + */res.data[i].name /*+ ']'*/).append('<br/>');
                                         data.powerList[j].functionIds += res.data[i].id + '-';
                                         console.log(res.data[i].id)
                                     }

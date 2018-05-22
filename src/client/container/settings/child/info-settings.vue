@@ -149,7 +149,10 @@ export default {
                         txt: '保存失败'
                     });
                 } else {
-                    this.setToast('保存成功');
+                    this.setToast({
+                        txt:'保存成功',
+                        showTime: Date.now()
+                    });
 
                 }
             })

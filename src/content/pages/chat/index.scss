@@ -1,0 +1,128 @@
+@import "../../../assets/style/_base.scss";
+
+.chat-ctn {
+    // float: right;
+    // display: inline-block;
+    // width: 28%;
+    margin-top: 16px;
+    min-width: 800px;
+    height: 300px;
+    padding: 0 20px;
+    background: #eee;
+    overflow: auto;
+}
+.input-msg {
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    min-width: 800px;
+    height: 160px;
+    padding: 10px 0;
+    background: #fff;
+    textarea {
+        width: 94%;
+        padding: 0 3%;
+        height: 100%;
+        border: 0 none;
+        resize: none;
+        background: #fff;
+    }
+}
+.btns {
+    margin: 10px 0;
+}
+.shift {
+    padding: 30px;
+    color: #fff;
+}
+
+
+.msg {
+    .left, .right {
+        display: flex;
+        align-items: center;
+    }
+    .left {
+        justify-content: flex-start;
+        .avatar {
+            margin-right: 10px;
+        }
+    }
+    .right {
+        justify-content: flex-end;
+        .avatar {
+            margin-left: 10px;
+        }
+        .message {
+            background: #7CFC00;
+        }
+    }
+    .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 18px;
+        overflow: hidden;
+        img {
+            width: 100%;
+        }
+    }
+    .message {
+        width: 20%;
+        min-width: 200px;
+        padding: 8px;
+        margin: 8px 0;
+        border-radius: 6px;
+        white-space: pre-wrap;
+        word-break: break-all;
+        background: #fff; //#00BFFF;
+        p {
+            word-break: break-all;
+        }
+    }
+}
+
+.come-tip {
+    margin: 8px auto;
+    width: 16em;
+    padding: 2px;
+    font-size: 12px;
+    color: #fff;
+    background: #aaa;
+    text-align: center;
+}
+
+
+.toast-ctn {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 50%;
+	margin: auto;
+	width: 220px;
+	padding: 10px 20px;
+	z-index: -1;
+	transform: translate3d(0,-50%,0);
+	color: #f0f0f0;
+	font-size: 18px; /*px*/
+	text-align: center;
+	background: rgba(33,33,33,0.8);
+	transition: opacity 0.8s ease;
+	border-radius: 8px;
+	opacity: 0;
+	&.show {
+		opacity: 1;
+		z-index: 9999;
+	}
+}
+
+button {
+    border: 1px solid #ccc;
+    padding: 6px 0;
+    width: 100px;
+    border-radius: 6px;
+    line-height: 1.8;
+    background: #fff;
+    cursor: pointer;
+    &:hover {
+        background: #efefef;
+    }
+}
