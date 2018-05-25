@@ -1,8 +1,8 @@
 var $ = require('jquery');
 var baseURL = {
     'contentURL': '/graduation-design/dist/sp/pages/',
-    'localURLBase': 'http://localhost',
-    'devURLBase': 'http://localhost',
+    'localURLBase': 'http://120.79.52.130',
+    'devURLBase': 'http://120.79.52.130',
     'prodURLBase': ''
 };
 /**
@@ -55,7 +55,7 @@ var index = {
         });
     },
     initWebSocket() {
-        socket = new WebSocket('ws://localhost/chatServer');
+        socket = new WebSocket('ws://120.79.52.130/chatServer');
         socket.onopen = function(e) {
             socket.send(JSON.stringify({
                 message: '',

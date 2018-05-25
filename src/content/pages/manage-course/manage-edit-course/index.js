@@ -11,8 +11,8 @@ var arrangeLevelList = require('utils').arrangeLevelList;
 
 var baseURL = {
     'contentURL': '/graduation-design/dist/sp/pages/',
-    'localURLBase': 'http://localhost',
-    'devURLBase': 'http://localhost',
+    'localURLBase': 'http://120.79.52.130',
+    'devURLBase': 'http://120.79.52.130',
     'prodURLBase': ''
 };
 var data = {

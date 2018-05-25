@@ -3,8 +3,8 @@ var utils = require('utils');
 
 var URLBase = {
     'contentURL': '/graduation-design/dist/sp/pages/',
-    'localURLBase': 'http://localhost',
-    'devURLBase': 'http://localhost',
+    'localURLBase': 'http://120.79.52.130',
+    'devURLBase': 'http://120.79.52.130',
     'prodURLBase': ''
 }
 /**

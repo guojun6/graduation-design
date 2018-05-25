@@ -182,7 +182,7 @@ export default {
             })
         },
         // initWebSocket() {
-        //     socket = new WebSocket('ws://localhost/chatServer');
+        //     socket = new WebSocket('ws://120.79.52.130/chatServer');
         //     socket.onopen = (e) => {
         //         socket.send(JSON.stringify({
         //             message: '',
