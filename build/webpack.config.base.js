@@ -30,8 +30,8 @@ module.exports = {
         ExtractStyle,
         new webpack.DefinePlugin({
             'contentURL': JSON.stringify('/graduation-design/dist/sp/pages/'),
-            'localURLBase': JSON.stringify('http://192.168.43.36:8080'),
-            'devURLBase': JSON.stringify('http://192.168.43.36:8080'),
+            'localURLBase': JSON.stringify('http://localhost'),
+            'devURLBase': JSON.stringify('http://localhost'),
             'prodURLBase': JSON.stringify(''),
             'expURL': JSON.stringify('')
         })

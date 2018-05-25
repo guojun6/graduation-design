@@ -1,8 +1,8 @@
 var $ = require('jquery');
 var baseURL = {
     'contentURL': '/graduation-design/dist/sp/pages/',
-    'localURLBase': 'http://192.168.43.36:8080',
-    'devURLBase': 'http://192.168.43.36:8080',
+    'localURLBase': 'http://localhost',
+    'devURLBase': 'http://localhost',
     'prodURLBase': ''
 };
 /**
@@ -55,7 +55,7 @@ var index = {
         });
     },
     initWebSocket() {
-        socket = new WebSocket('ws://192.168.43.36:8080/chatServer');
+        socket = new WebSocket('ws://localhost/chatServer');
         socket.onopen = function(e) {
             socket.send(JSON.stringify({
                 message: '',
@@ -180,9 +180,8 @@ var index = {
             $('#text').get(0).value = '';
         },
         enterSendMsg: function(e) {
-            console.log($('#text').get(0).value);
+            // console.log($('#text').get(0).value);
             if (e.shiftKey && (e.key === 'Enter' || e.keyCode === 13)) {
-                console.log('zfdsfd')
                 if ($('#text').get(0).value.length === 0) {
                     index.setToast({
                         showTime: Date.now(),
@@ -190,7 +189,7 @@ var index = {
                     });
                     return;
                 }
-                console.log('sad')
+                
                 socket.send(JSON.stringify({
                     message: $('#text').get(0).value,
                     first: false,

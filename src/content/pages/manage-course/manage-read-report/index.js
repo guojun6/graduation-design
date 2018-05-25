@@ -6,8 +6,8 @@ var $ = require('jquery');
  */
 var baseURL = {
     'contentURL': '/graduation-design/dist/sp/pages/',
-    'localURLBase': 'http://192.168.43.36:8080',
-    'devURLBase': 'http://192.168.43.36:8080',
+    'localURLBase': 'http://localhost',
+    'devURLBase': 'http://localhost',
     'prodURLBase': ''
 };
 
