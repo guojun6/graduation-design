@@ -1,5 +1,8 @@
 @import "../../../../assets/style/base";
 @import "../../../assets/common";
+html, body {
+	height: 100%;
+}
 .toast-ctn {
 	position: absolute;
 	left: 0;
@@ -23,7 +26,11 @@
 	}
 }
 .manage-all-course {
-	padding: 10px;
+	box-sizing: border-box;
+	position: relative;
+	padding: 10px 16px 20px;
+	overflow: auto;
+	min-height: 100%;
 }
 .btn-operate {
 	margin-right: 10px;

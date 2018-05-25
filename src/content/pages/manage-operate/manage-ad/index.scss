@@ -137,7 +137,10 @@ html, body {
 	}
 }
 .manage-power {
+	box-sizing: border-box;
+	position: relative;
 	padding: 10px 16px 20px;
+	min-height: 100%;
 	// width: 100%;
 	overflow: auto;
 }

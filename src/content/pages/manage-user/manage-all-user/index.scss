@@ -129,6 +129,9 @@ html, body {
 	} 
 }
 .manage-power {
+	box-sizing: 100%;
+	position: relative;
+	min-height: 100%;
 	padding: 10px 16px 20px; 
 	// width: 100%;
 	overflow: auto;
