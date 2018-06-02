@@ -16,7 +16,7 @@
                 </a>
                 <a
                     v-else
-                    :href="'/graduation-design/dist/sp/pages/account?url=' + location.hash.slice(2)">
+                    :href="'/graduation-design/dist/sp/pages/account/index.html?url=' + location.hash.slice(2)">
                     去登录
                 </a>
             </el-button>
